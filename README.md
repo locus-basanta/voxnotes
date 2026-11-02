@@ -1,6 +1,7 @@
 # VoxNotes — Voice-Driven Notes & Management App
 
-**Live App:** [locus-basanta.github.io/voxnotes](https://locus-basanta.github.io/voxnotes/)
+- **Cloudflare Live:** [https://voxnotes.manwanepal.workers.dev](https://voxnotes.manwanepal.workers.dev)
+- **GitHub Pages Live:** [https://locus-basanta.github.io/voxnotes](https://locus-basanta.github.io/voxnotes/)
 
 **VoxNotes** is a fast, responsive, hands-free voice note-taking and management web application built with a warm paper-and-ink interface, the Web Speech API (SpeechRecognition & SpeechSynthesis), and Web Audio API.
 
