@@ -1,0 +1,14 @@
+{
+  "name": "voxnotes",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -i ./src/styles.css -o .build.css --minify && node build.cjs",
+    "test": "node test_voice_engine.js",
+    "test:browser": "node tests/browser.cjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.19",
+    "playwright": "^1.56.0"
+  }
+}

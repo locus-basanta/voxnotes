@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf9f6">
+<meta name="description" content="A quiet place for your thoughts. Capture, edit, and organize notes with your voice.">
+<title>VoxNotes — A little room to think</title>
+<style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }
+/*! tailwindcss v3.4.19 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.flex{display:flex}.grid{display:grid}.hidden{display:none}.resize{resize:both}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.items-center{align-items:center}.gap-1{gap:.25rem}.gap-2{gap:.5rem}.gap-4{gap:1rem}.space-y-1>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.25rem*var(--tw-space-y-reverse))}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}:root{color-scheme:light;--paper:#faf9f6;--surface:#fff;--raised:#f0eeea;--ink:#292925;--secondary:#595953;--muted:#66665e;--line:#e4e3dc;--accent:#9c3d25;--accent-soft:#f6e9e2;--ease:cubic-bezier(.22,1,.36,1)}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif;font-size:14px;line-height:1.5}button,input,select,textarea{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}a,button,input,select,textarea{touch-action:manipulation}button:disabled{opacity:.5;cursor:not-allowed}button{transition:background-color .16s var(--ease),color .16s var(--ease),border-color .16s var(--ease)}a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}::-moz-selection{background:#efd5c6;color:var(--ink)}::selection{background:#efd5c6;color:var(--ink)}[hidden]{display:none!important}svg.icon{width:20px;height:20px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}.symbols{position:absolute;width:0;height:0;overflow:hidden}.skip{position:fixed;top:-60px;left:16px;z-index:100;background:var(--ink);color:#fff;padding:12px}.skip:focus{top:12px}.sidebar{width:224px;position:fixed;inset:0 auto 0 0;background:#f0efea;border-right:1px solid var(--line);padding:32px 16px 20px;display:flex;flex-direction:column;z-index:20}.brand{display:flex;align-items:center;gap:12px;padding:0 12px;font-size:20px;font-weight:600;letter-spacing:-.5px}.brand-symbol{color:var(--accent);width:28px!important;height:28px!important}.workspace-label{margin:32px 12px 8px;font-size:12px;color:var(--muted)}.nav-button{display:flex;align-items:center;gap:12px;width:100%;min-height:40px;padding:8px 12px;border-radius:8px;color:var(--secondary);text-align:left;border:1px solid transparent}.nav-button:hover{background:#e8e7e1}.nav-button[aria-pressed=true]{background:#fff;color:var(--ink);border-color:var(--line);font-weight:500}.nav-button .count{margin-left:auto;font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted)}.category-dot{width:6px;height:6px;border-radius:50%;background:#a9a99e;margin:7px;flex-shrink:0}.sidebar-bottom{margin-top:auto;padding-top:32px}.local-status{font-size:12px;color:var(--muted);padding:16px 12px 0;border-top:1px solid var(--line);margin-top:16px;display:flex;align-items:center;gap:8px}.local-status svg{width:16px;height:16px}.app{margin-left:224px;min-width:0}.topbar{height:72px;padding:0 40px;border-bottom:1px solid var(--line);justify-content:space-between;gap:16px;background:var(--paper)}.breadcrumb,.topbar{display:flex;align-items:center}.breadcrumb{gap:12px;color:var(--muted);font-size:13px}.breadcrumb strong{font-weight:500;color:var(--ink)}.topbar-date{font-size:12px;color:var(--muted)}.mobile-brand{display:none}.mobile-menu{display:none!important}.main{max-width:1280px;margin:0 auto;padding:40px 40px 48px}.heading{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:28px}h1{font-family:Georgia,Times New Roman,serif;font-size:40px;font-weight:400;line-height:1.15;letter-spacing:-1px;margin:0 0 8px}.heading p{color:var(--secondary);margin:0;font-size:14px}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border-radius:8px;padding:10px 16px;font-weight:500;border:1px solid var(--line);background:var(--surface);white-space:nowrap}.button:hover{background:var(--raised)}.button.primary{background:var(--ink);color:#fff;border-color:var(--ink)}.button.primary:hover{background:#44443e}.button.accent{background:var(--accent);color:#fff;border-color:var(--accent)}.button.accent:hover{background:#883923}.button.quiet{background:transparent;border-color:transparent;color:var(--secondary)}.button.quiet:hover{background:var(--raised)}.icon-button{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;border-radius:8px;color:var(--secondary);background:transparent;flex-shrink:0}.icon-button:hover{background:var(--raised);color:var(--ink)}.icon-button[aria-pressed=true]{color:var(--accent);background:var(--accent-soft)}.capture{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:16px;gap:20px;position:relative}.capture,.capture-art{display:flex;align-items:center}.capture-art{gap:4px;justify-content:center;width:56px;height:56px;background:var(--accent-soft);border-radius:12px;color:var(--accent);flex-shrink:0}.capture-art span{display:block;width:3px;border-radius:2px;background:currentColor}.capture-art span:first-child,.capture-art span:nth-child(7){height:12px}.capture-art span:nth-child(2),.capture-art span:nth-child(6){height:24px}.capture-art span:nth-child(3),.capture-art span:nth-child(5){height:36px}.capture-art span:nth-child(4){height:20px}.capture-copy{min-width:0;flex:1}.capture h2{margin:0 0 4px;font-size:18px;font-weight:500}.capture p{color:var(--secondary);margin:0;font-size:13px;overflow-wrap:anywhere}.capture-actions{display:flex;align-items:center;gap:8px}.capture[data-state=listening]{border-color:#b77862}.capture[data-state=listening] .capture-art{color:#9b3426}.capture[data-state=listening] .capture-art span{animation:recording .9s ease-in-out infinite alternate}.capture[data-state=listening] .capture-art span:nth-child(2n){animation-delay:.25s}@keyframes recording{to{transform:scaleY(.45)}}.shortcut-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 28px;font-size:12px;color:var(--muted)}.shortcut-row button{color:var(--secondary);border-bottom:1px dotted #b7b6ac;padding:4px 0;margin-left:8px}.shortcut-row button:hover{color:var(--accent);border-color:var(--accent)}.summary{display:flex;gap:24px;padding:0 0 24px;border-bottom:1px solid var(--line);margin-bottom:24px;color:var(--muted);font-size:12px;flex-wrap:wrap}.summary strong{font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink);margin-right:4px}.tools{gap:16px;margin-bottom:28px}.search,.tools{display:flex;align-items:center}.search{position:relative;flex:1;max-width:420px}.search>svg{position:absolute;left:12px;color:var(--muted);pointer-events:none}.search input{width:100%;height:44px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 44px;color:var(--ink)}.search input::-moz-placeholder{color:var(--muted)}.search input::placeholder{color:var(--muted)}.search .icon-button{position:absolute;right:0}.sort{display:flex;align-items:center;gap:8px;margin-left:auto;font-size:12px;color:var(--secondary)}.sort select{background:transparent;border:0;padding:12px 0 12px 8px;color:var(--ink);max-width:160px}.mobile-filters{display:none}.section-heading{display:flex;align-items:center;gap:8px;margin-bottom:12px;color:var(--secondary);font-size:13px;font-weight:500}.section-heading svg{width:16px;height:16px}.section-heading .line{flex:1;height:1px;background:var(--line);margin-left:8px}.note-section+.note-section{margin-top:32px}.note-card{min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);position:relative;display:flex;flex-direction:column;overflow:hidden;transition:border-color .16s var(--ease),box-shadow .16s var(--ease)}.note-card:focus-within,.note-card:hover{border-color:#c4c2b8;box-shadow:0 2px 8px #29292507}.note-open{width:100%;padding:20px 20px 8px;text-align:left;flex:1;min-height:184px;display:flex;flex-direction:column;align-items:flex-start}.note-kicker{color:var(--muted);font-size:12px;display:flex;align-items:center;gap:8px;margin-bottom:16px}.note-kicker .icon{width:16px;height:16px;color:var(--accent)}.note-title{font-size:17px;font-weight:500;line-height:1.4;margin:0 0 8px;overflow-wrap:anywhere}.note-preview{color:var(--secondary);font-size:13px;line-height:1.7;margin:0;white-space:pre-line;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}.note-footer{display:flex;justify-content:space-between;align-items:center;padding:4px 12px 8px 20px;gap:8px}.note-footer time{font-size:12px;color:var(--muted)}.card-actions{display:flex;gap:0}.card-actions .icon{width:18px;height:18px}.note-card .pin-on{color:var(--accent)}.empty{padding:40px 20px;text-align:center;border:1px dashed #cecdc4;border-radius:12px}.empty>svg{width:32px;height:32px;color:var(--muted);margin:0 auto 16px}.empty h2{font-family:Georgia,serif;font-size:24px;font-weight:400;margin:0 0 8px}.empty p{color:var(--secondary);margin:0 0 20px}.workspace-footer{margin-top:32px;display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}.workspace-footer svg{width:16px;height:16px}.mobile-dock{display:none}.toast{position:fixed;bottom:24px;left:calc(50% + 112px);transform:translateX(-50%);z-index:80;display:flex;align-items:center;gap:12px;width:-moz-max-content;width:max-content;max-width:calc(100vw - 32px);background:var(--ink);color:#fff;border-radius:12px;padding:12px 16px;box-shadow:0 8px 24px #29292518;font-size:13px}.toast span{overflow-wrap:anywhere}.toast button{min-height:40px;padding:8px;font-weight:500;color:#f6cab2}.toast .icon-button{color:#fff;width:32px}dialog{padding:0;border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);box-shadow:0 24px 80px #22221b24;width:calc(100% - 48px);max-width:720px;max-height:calc(100dvh - 48px);margin:auto}dialog::backdrop{background:#29292555}.dialog-layout{display:flex;flex-direction:column;max-height:calc(100dvh - 48px)}.dialog-header{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 20px;border-bottom:1px solid var(--line);flex-shrink:0}.dialog-header h2{font-size:14px;font-weight:500;margin:0}.dialog-body{padding:28px 32px;overflow-y:auto;min-height:0}.editor-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;color:var(--muted);font-size:12px;margin-bottom:20px}.editor-meta select{border:1px solid var(--line);padding:8px 28px 8px 12px;border-radius:8px;color:var(--secondary);background:var(--paper);min-height:40px}.editor-title{font-family:Georgia,serif;font-size:32px;line-height:1.3;padding:4px 0}.editor-content,.editor-title{width:100%;border:0;background:transparent;color:var(--ink)}.editor-content{min-height:240px;resize:vertical;padding:20px 0;font-size:16px;line-height:1.8}.editor-content::-moz-placeholder,.editor-title::-moz-placeholder{color:#929187}.editor-content::placeholder,.editor-title::placeholder{color:#929187}.editor-voice{background:var(--paper);padding:12px 16px;border:1px solid var(--line);border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px}.editor-voice p{margin:0;font-size:12px;color:var(--secondary)}.editor-voice strong{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-bottom:4px}.dialog-footer{padding:16px 24px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-shrink:0;background:var(--paper)}.dialog-footer .danger{color:#a13f2e}.editor-save-state{color:var(--muted);font-size:12px}.help-intro{color:var(--secondary);margin:0 0 24px}.command-list{margin:0}.command-list>div{padding:16px 0;border-bottom:1px solid var(--line)}.command-list dt{font-weight:500;margin-bottom:4px}.command-list dd{color:var(--secondary);margin:0;line-height:1.8}.command-list code{font-family:inherit;color:var(--accent)}.command-form{margin-top:24px}.command-form label{font-size:13px;display:block;margin-bottom:8px}.command-form .row{display:flex;gap:8px}.command-form input{border:1px solid var(--line);padding:10px 12px;border-radius:8px;flex:1;min-width:0;background:var(--paper)}.help-privacy{margin:24px 0 0;font-size:12px;color:var(--secondary);line-height:1.7}.confirm{max-width:400px}.confirm h2{font-family:Georgia,serif;font-size:24px;font-weight:400;margin:0 0 12px}.confirm p{color:var(--secondary);overflow-wrap:anywhere}.confirm .dialog-footer{justify-content:flex-end}.drawer-backdrop{display:none}@media(min-width:1440px){.main{padding-left:56px;padding-right:56px}}@media(max-width:1100px){.sidebar{width:200px}.app{margin-left:200px}.main{padding:32px 28px}.topbar{padding:0 28px}.toast{left:calc(50% + 100px)}.capture{gap:16px;padding:20px}}@media(max-width:767px){.sidebar{transform:translateX(-100%);width:256px;transition:transform .2s var(--ease);padding-top:24px;z-index:65}body.drawer-open .sidebar{transform:translateX(0)}body.drawer-open .drawer-backdrop{display:block;position:fixed;inset:0;background:#29292555;z-index:60}.app{margin-left:0}.topbar{height:64px;padding:0 16px;gap:12px}.breadcrumb,.topbar-date{display:none}.mobile-brand{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:600;margin-right:auto}.mobile-brand .icon{color:var(--accent);width:24px;height:24px}.mobile-menu{display:inline-flex!important}.main{padding:28px 20px 112px}.heading{gap:12px;margin-bottom:24px}h1{font-size:34px}.heading p{max-width:220px;font-size:13px}.heading .button{padding:10px 12px}.heading .button .new-label{display:none}.capture{padding:20px;gap:16px;align-items:flex-start;margin-bottom:12px}.capture-art{width:44px;height:44px;gap:3px}.capture-art span{width:2px}.capture-art span:nth-child(3),.capture-art span:nth-child(5){height:28px}.capture h2{font-size:16px}.capture-actions{display:none}.shortcut-row{margin-bottom:20px;row-gap:0}.shortcut-row button{margin-left:4px}.summary{gap:16px;margin-bottom:20px;padding-bottom:20px;row-gap:4px}.summary .word-stat{display:none}.tools{gap:8px;margin-bottom:12px}.search{max-width:none}.sort>label{display:none}.sort select{max-width:112px;font-size:12px;padding-left:0}.mobile-filters{display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin;margin:0 -4px 24px;padding:4px}.mobile-filters button{min-height:40px;white-space:nowrap;padding:8px 16px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:var(--surface);color:var(--secondary)}.mobile-filters button[aria-pressed=true]{border-color:var(--ink);background:var(--ink);color:#fff}.note-open{min-height:168px}.note-preview{-webkit-line-clamp:3}.note-section+.note-section{margin-top:28px}.mobile-dock{position:fixed;z-index:30;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--paper);border-top:1px solid var(--line);padding:12px 20px max(12px,env(safe-area-inset-bottom))}.dock-label{font-size:13px;font-weight:500}.dock-hint{font-size:12px;color:var(--muted);margin-top:2px}.mobile-dock .button{border-radius:24px;padding:12px 20px;min-width:128px}.toast{left:50%;bottom:100px}dialog{width:100%;max-width:none;border:0;border-radius:0;margin:0}.dialog-layout,dialog{max-height:100dvh;height:100dvh}.dialog-header{padding:8px 12px;min-height:64px}.dialog-body{padding:24px 20px;flex:1}.editor-title{font-size:28px}.editor-content{min-height:220px}.editor-voice{flex-wrap:wrap}.dialog-footer{padding:12px 16px max(12px,env(safe-area-inset-bottom));gap:8px}.editor-save-state{max-width:100px}.confirm{width:calc(100% - 32px);max-height:90dvh;margin:auto;border-radius:16px}.confirm,.confirm .dialog-layout{height:auto}}@media(max-width:359px){.main{padding-left:16px;padding-right:16px}.capture-art{display:none}.summary{gap:12px}.editor-save-state{display:none}.sort select{max-width:100px}}@media(prefers-reduced-motion:reduce){*,:after,:before{animation:none!important;transition:none!important;scroll-behavior:auto!important}}@media (min-width:640px){.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1280px){.xl\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to notes</a>
+<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 10v4m4-8v12m5-16v20m5-16v12m4-8v4"/></symbol>
+<symbol id="i-notes" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2"/><path d="M9 3v18M3 7h4m-4 5h4m-4 5h4m5-10h5m-5 5h5"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="m16 3 5 5-4 1-4 5v4l-3-3-6 6 6-6-3-3h4l5-4 1-4Z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2m-7 9v3m-4 0h8"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4 2c-1 .5-1.5 1-1.5 2m0 3h.01"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+<symbol id="i-speaker" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5V4Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+<symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+</defs></svg>
+<button class="drawer-backdrop" id="drawerBackdrop" aria-label="Close navigation" tabindex="-1"></button>
+<aside class="sidebar" id="sidebar" aria-label="Notebook navigation">
+  <a class="brand" href="#main"><svg class="icon brand-symbol" aria-hidden="true"><use href="#i-wave"/></svg>VoxNotes</a>
+  <p class="workspace-label">Your notebook</p>
+  <nav class="space-y-1" aria-label="Collections">
+    <button class="nav-button" data-filter="all" aria-pressed="true"><svg class="icon" aria-hidden="true"><use href="#i-notes"/></svg>All notes <span class="count" id="navTotal">0</span></button>
+    <button class="nav-button" data-filter="pinned" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Pinned <span class="count" id="navPinned">0</span></button>
+    <button class="nav-button" data-filter="voice" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-wave"/></svg>Voice notes <span class="count" id="navVoice">0</span></button>
+  </nav>
+  <p class="workspace-label">Categories</p>
+  <nav class="space-y-1" aria-label="Categories">
+    <button class="nav-button" data-filter="Work" aria-pressed="false"><span class="category-dot"></span>Work</button>
+    <button class="nav-button" data-filter="Personal" aria-pressed="false"><span class="category-dot"></span>Personal</button>
+    <button class="nav-button" data-filter="Ideas" aria-pressed="false"><span class="category-dot"></span>Ideas</button>
+    <button class="nav-button" data-filter="Todo" aria-pressed="false"><span class="category-dot"></span>To-do</button>
+    <button class="nav-button" data-filter="Memo" aria-pressed="false"><span class="category-dot"></span>Memo</button>
+  </nav>
+  <div class="sidebar-bottom">
+    <button class="nav-button" data-action="help"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Voice guide</button>
+    <button class="nav-button" data-action="export"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export notebook</button>
+    <p class="local-status"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>Stored on this device</p>
+  </div>
+</aside>
+<div class="app" id="app">
+  <header class="topbar">
+    <button class="icon-button mobile-menu" id="menuBtn" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button>
+    <a class="mobile-brand" href="#main"><svg class="icon" aria-hidden="true"><use href="#i-wave"/></svg>VoxNotes</a>
+    <div class="breadcrumb"><span>My notebook</span><span aria-hidden="true">/</span><strong id="breadcrumbLabel">All notes</strong></div>
+    <time class="topbar-date" id="today"></time>
+    <button class="icon-button" data-action="help" aria-label="Open voice guide" title="Voice guide"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg></button>
+  </header>
+  <main class="main" id="main" tabindex="-1">
+    <div class="heading">
+      <div><h1 id="pageTitle">All notes</h1><p id="pageSubtitle">A little room for everything on your mind.</p></div>
+      <button class="button primary" id="newNoteBtn" aria-label="New note"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="new-label">New note</span></button>
+    </div>
+    <section class="capture" id="capture" data-state="idle" aria-label="Voice capture">
+      <div class="capture-art" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="capture-copy"><h2 id="captureTitle">Think it. Say it. Keep it.</h2><p id="captureHint" role="status" aria-live="polite">Speak a thought or a command. We’ll take note.</p></div>
+      <div class="capture-actions"><button class="button accent" id="mainMicBtn"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg><span>Start speaking</span></button><button class="button" id="stopTtsBtn" hidden><svg class="icon" aria-hidden="true"><use href="#i-stop"/></svg>Stop reading</button></div>
+    </section>
+    <div class="shortcut-row"><span>Try saying</span><button data-example="Create note Pick up coffee on the way home">“Create note…”</button><button data-example="Search coffee">“Search coffee”</button><button data-action="help">See all commands <span aria-hidden="true">↗</span></button></div>
+    <div class="summary" aria-label="Notebook summary"><span><strong id="statTotal">0</strong>notes</span><span><strong id="statPinned">0</strong>pinned</span><span><strong id="statVoice">0</strong>from voice</span><span class="word-stat"><strong id="statWords">0</strong>words</span></div>
+    <div class="tools">
+      <div class="search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><label class="sr-only" for="searchInput">Search notes</label><input type="search" id="searchInput" placeholder="Search your notes" autocomplete="off"><button class="icon-button" id="clearSearch" aria-label="Clear search" hidden><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+      <div class="sort"><label for="sortSelect">Sort by</label><select id="sortSelect" aria-label="Sort notes"><option value="updated">Last edited</option><option value="created">Date created</option><option value="title">Title A–Z</option></select></div>
+    </div>
+    <nav class="mobile-filters" aria-label="Filter notes"><button data-filter="all" aria-pressed="true">All notes</button><button data-filter="pinned" aria-pressed="false">Pinned</button><button data-filter="voice" aria-pressed="false">Voice</button><button data-filter="Work" aria-pressed="false">Work</button><button data-filter="Personal" aria-pressed="false">Personal</button><button data-filter="Ideas" aria-pressed="false">Ideas</button><button data-filter="Todo" aria-pressed="false">To-do</button><button data-filter="Memo" aria-pressed="false">Memo</button></nav>
+    <div id="notesArea">
+      <section class="note-section" id="pinnedSection" aria-labelledby="pinnedHeading" hidden><h2 class="section-heading" id="pinnedHeading"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg>Pinned <span class="line" aria-hidden="true"></span></h2><div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4" id="pinnedGrid"></div></section>
+      <section class="note-section" id="regularSection" aria-labelledby="regularHeading"><h2 class="section-heading" id="regularHeading">Recently edited <span class="line" aria-hidden="true"></span></h2><div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4" id="notesGrid"></div></section>
+      <section class="empty" id="emptyState" hidden><svg class="icon" aria-hidden="true"><use href="#i-notes"/></svg><h2 id="emptyTitle">Make room for a thought</h2><p id="emptyText">Start with your voice, or write your first note.</p><button class="button" id="emptyAction">Create a note</button></section>
+    </div>
+    <p class="workspace-footer"><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg><span id="storageStatus">Notes stay in this browser. Export a copy to keep a backup.</span></p>
+  </main>
+</div>
+<div class="mobile-dock"><div><p class="dock-label" id="dockLabel">A thought worth keeping?</p><p class="dock-hint" id="dockHint">Your voice is a good place to start</p></div><button class="button accent" id="mobileMicBtn"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg><span>Speak</span></button></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastMessage"></span><button id="undoBtn" hidden>Undo</button><button class="icon-button" id="closeToast" aria-label="Dismiss notification"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+<dialog id="editor" aria-labelledby="editorHeading">
+ <div class="dialog-layout">
+  <header class="dialog-header"><h2 id="editorHeading">New note</h2><div class="flex items-center gap-1"><button class="icon-button" id="editorPin" aria-label="Pin note" aria-pressed="false" title="Pin note"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></button><button class="icon-button" id="editorRead" aria-label="Read note aloud" title="Read aloud"><svg class="icon" aria-hidden="true"><use href="#i-speaker"/></svg></button><button class="icon-button" id="closeEditor" aria-label="Close editor"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div></header>
+  <div class="dialog-body">
+    <div class="editor-meta"><label><span class="sr-only">Category</span><select id="noteTag"><option>Work</option><option>Personal</option><option>Ideas</option><option value="Todo">To-do</option><option>Memo</option></select></label><span id="editorWords">0 words</span></div>
+    <label for="noteTitle" class="sr-only">Note title</label><input class="editor-title" id="noteTitle" placeholder="Give this thought a title" maxlength="300" autocomplete="off">
+    <label for="noteContent" class="sr-only">Note content</label><textarea class="editor-content" id="noteContent" placeholder="Start writing, or let your voice do the talking…"></textarea>
+    <div class="editor-voice"><div><strong id="editorVoiceTitle">Give your keyboard a break</strong><p id="editorVoiceHint">Dictate at your cursor. Say “new line” to format.</p></div><button class="button" id="dictateBtn"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg><span>Dictate</span></button></div>
+  </div>
+  <footer class="dialog-footer"><div class="flex items-center gap-2"><button class="icon-button danger" id="deleteNoteBtn" aria-label="Delete note" title="Delete note"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button><span class="editor-save-state" id="saveState">Not saved yet</span></div><button class="button primary" id="saveNoteBtn"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Save note</button></footer>
+ </div>
+</dialog>
+<dialog id="helpDialog" aria-labelledby="helpTitle"><div class="dialog-layout"><header class="dialog-header"><h2 id="helpTitle">Your voice, a few shortcuts</h2><button class="icon-button" id="closeHelp" aria-label="Close voice guide"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></header><div class="dialog-body"><p class="help-intro">Tap Speak, then say a command. No wake word needed.</p><dl class="command-list">
+<div><dt>Capture a thought</dt><dd><code>“Create note Buy coffee and oat milk”</code><br>Or just speak your thought to save it as a new note.</dd></div>
+<div><dt>Find & organize</dt><dd><code>“Search coffee”</code> · <code>“Show all”</code><br><code>“Pin note Grocery”</code> · <code>“Unpin note Grocery”</code><br><code>“Tag note Grocery Todo”</code></dd></div>
+<div><dt>Edit a note</dt><dd><code>“Open note Grocery”</code><br><code>“Add to note Grocery also get bread”</code><br>In the editor, tap Dictate to insert words at your cursor.</dd></div>
+<div><dt>Listen & manage</dt><dd><code>“Read note Grocery”</code> · <code>“Stop speaking”</code><br><code>“Delete note Grocery”</code> asks you to confirm.<br><code>“Export notes”</code> downloads a Markdown copy.</dd></div>
+<div><dt>A little punctuation</dt><dd>While dictating, say “period”, “comma”, “question mark”, “new line”, or “new paragraph”.</dd></div>
+</dl><form class="command-form" id="commandForm"><label for="commandInput">Prefer to type a command?</label><div class="row"><input id="commandInput" placeholder="Search coffee" autocomplete="off" required><button class="button primary" type="submit">Run</button></div></form><p class="help-privacy">Voice support depends on your browser. Chrome or Edge over HTTPS is recommended. Your browser’s speech provider may process audio online. Notes are stored locally, not synced or encrypted by this app.</p></div></div></dialog>
+<dialog class="confirm" id="confirmDialog" aria-labelledby="confirmTitle"><div class="dialog-layout"><div class="dialog-body"><h2 id="confirmTitle">Delete this note?</h2><p id="confirmMessage"></p></div><footer class="dialog-footer"><button class="button" id="confirmCancel">Keep note</button><button class="button primary" id="confirmAccept">Delete note</button></footer></div></dialog>
+<noscript><p style="padding:24px">Enable JavaScript to use VoxNotes. This app saves notes in your browser.</p></noscript>
+<script>/* VoxNotes: small, dependency-free note and voice controller. */
+const VoxCore = (() => {
+  const KEY = 'voxnotes_data_v2';
+  const TAGS = ['Work', 'Personal', 'Ideas', 'Todo', 'Memo'];
+  const normal = s => String(s).toLocaleLowerCase().replace(/[“”"']/g, '').replace(/[.!?]+$/g, '').trim();
+  const words = s => String(s).trim().split(/\s+/).filter(Boolean).length;
+  const escape = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function normalizeNotes(raw) {
+    if (!Array.isArray(raw)) throw new Error('Notebook data is not an array');
+    const seen = new Set();
+    return raw.map(n => {
+      if (!n || typeof n.title !== 'string' || typeof n.content !== 'string' || typeof n.id !== 'string' || seen.has(n.id)) throw new Error('Notebook contains invalid notes');
+      seen.add(n.id);
+      return {...n, tag:TAGS.includes(n.tag) ? n.tag : 'Memo', pinned:!!n.pinned, voiceCreated:!!n.voiceCreated, createdAt:Number(n.createdAt) || Date.now(), updatedAt:Number(n.updatedAt) || Number(n.createdAt) || Date.now()};
+    });
+  }
+  function load(storage) {
+    const current = storage.getItem(KEY);
+    const legacy = current === null ? storage.getItem('voxnotes_data_v1') : null;
+    return current !== null || legacy !== null ? normalizeNotes(JSON.parse(current ?? legacy)) : null;
+  }
+  function find(notes, query) {
+    const q = normal(query);
+    if (!q) return null;
+    const exact = notes.filter(n => normal(n.title) === q);
+    if (exact.length === 1) return exact[0];
+    const candidates = notes.filter(n => normal(n.title).includes(q));
+    return candidates.length === 1 ? candidates[0] : null;
+  }
+  function punctuation(text) {
+    return String(text).replace(/\s*\bnew paragraph\b\s*/gi,'\n\n').replace(/\s*\bnew line\b\s*/gi,'\n')
+      .replace(/[ \t]*\bquestion mark\b/gi,'?').replace(/[ \t]*\bexclamation mark\b/gi,'!')
+      .replace(/[ \t]*\bperiod\b/gi,'.').replace(/[ \t]*\bcomma\b/gi,',');
+  }
+  function appendMatch(notes, phrase) {
+    const m = phrase.match(/^(?:add\s+to(?:\s+note)?|append(?:\s+to)?(?:\s+note)?)\s+(.+)$/i);
+    if (!m) return null;
+    const body = m[1].trim();
+    // Prefer the full, longest title; only accept unambiguous short references.
+    const full = [...notes].sort((a,b) => b.title.length-a.title.length).find(n => normal(body).startsWith(normal(n.title) + ' '));
+    if (full) return {note:full, text:body.slice(full.title.length).trim()};
+    const tokens = body.split(/\s+/);
+    for (let i=tokens.length-1; i>0; i--) {
+      const note = find(notes,tokens.slice(0,i).join(' '));
+      if (note) return {note, text:tokens.slice(i).join(' ')};
+    }
+    return null;
+  }
+  function parse(text) {
+    const t = String(text).trim();
+    if (!t) return {action:'empty'};
+    if (/^(help|commands|show commands)[.!?]?$/i.test(t)) return {action:'help'};
+    if (/^(stop|pause|stop speaking|stop reading)[.!?]?$/i.test(t)) return {action:'stop'};
+    if (/^(export|download|backup)\s+(?:all\s+)?notes[.!?]?$/i.test(t)) return {action:'export'};
+    if (/^(clear search|show all|all notes|reset)[.!?]?$/i.test(t)) return {action:'clear'};
+    let m=t.match(/^(?:create(?:\s+a)?\s+note|new\s+note|take(?:\s+a)?\s+note|make(?:\s+a)?\s+note|note)\s+(.+)$/i);
+    if (m) return {action:'create', value:m[1]};
+    m=t.match(/^(?:search(?:\s+for)?|find|look\s+for)\s+(.+)$/i);
+    if (m) return {action:'search', value:m[1].replace(/[.!?]+$/,'')};
+    m=t.match(/^(read|speak|play|open|edit|view|pin|unpin|delete|remove|trash|erase)\s+(?:note\s+)?(.+)$/i);
+    if (m) return {action:({speak:'read',play:'read',edit:'open',view:'open',remove:'delete',trash:'delete',erase:'delete'})[m[1].toLowerCase()] || m[1].toLowerCase(), value:m[2]};
+    if (/^(add\s+to|append)\b/i.test(t)) return {action:'append', value:t};
+    m=t.match(/^tag\s+(?:note\s+)?(.+)\s+(work|personal|ideas|todo|memo)[.!?]?$/i);
+    if (m) return {action:'tag', value:m[1], tag:TAGS.find(v=>v.toLowerCase()===m[2].toLowerCase())};
+    // Do not turn an incomplete management command into an accidental note.
+    if (/^(create|new|take|make|read|speak|open|edit|pin|unpin|delete|remove|tag|search|find)\b/i.test(t)) return {action:'incomplete'};
+    return {action:'create', value:t};
+  }
+  function makeNote(content, voice=true) {
+    const now=Date.now();
+    const title=content.trim().split(/\s+/).slice(0,6).join(' ');
+    const tag=/\b(buy|grocery|groceries|todo|task)\b/i.test(content) ? 'Todo' : /\b(idea|app|design)\b/i.test(content) ? 'Ideas' : /\b(home|family|travel)\b/i.test(content) ? 'Personal' : 'Memo';
+    return {id:'note_'+(globalThis.crypto?.randomUUID?.() || now+'_'+Math.random().toString(36).slice(2)), title:title.charAt(0).toUpperCase()+title.slice(1), content:content.trim(), tag, pinned:false, voiceCreated:voice, createdAt:now, updatedAt:now};
+  }
+  return {KEY,TAGS,normal,words,escape,normalizeNotes,load,find,punctuation,appendMatch,parse,makeNote};
+})();
+if (typeof module !== 'undefined') module.exports=VoxCore;
+
+if (typeof document !== 'undefined') (() => {
+  'use strict';
+  const C=VoxCore, $=id=>document.getElementById(id);
+  const icon=name=>`<svg class="icon" aria-hidden="true"><use href="#i-${name}"/></svg>`;
+  const labels={all:'All notes',pinned:'Pinned',voice:'Voice notes',Todo:'To-do'};
+  let notes=[], filter='all', query='', sort='updated', draft=null, initialDraft='', lastFocus=null;
+  let storageReadable=true, deleted=null, toastTimer, pendingConfirm=null;
+  let recognition=null, voicePhase='idle', voiceMode=null, voiceGeneration=0, speaking=false, utterance=null;
+  const Speech=window.SpeechRecognition || window.webkitSpeechRecognition;
+  function notify(message,undo=false) {
+    clearTimeout(toastTimer); $('toastMessage').textContent=message; $('undoBtn').hidden=!undo; $('toast').hidden=false;
+    if (!undo) toastTimer=setTimeout(()=>$('toast').hidden=true,6500);
+  }
+  function commit(next) {
+    if (!storageReadable) { notify('Your stored notebook could not be read. Export a copy before changing browser storage.'); return false; }
+    try { localStorage.setItem(C.KEY,JSON.stringify(next)); }
+    catch(e) { $('storageStatus').textContent='Storage unavailable. Your changes have not been saved.'; notify('Could not save. Browser storage is full or unavailable. Keep the editor open and copy your text.'); return false; }
+    notes=next; render(); return true;
+  }
+  function seed() {
+    const now=Date.now();
+    return [
+      {id:'welcome',title:'A little room to think',content:'This is your notebook. A place for passing thoughts, plans, and things you don’t want to forget.\n\nTap Speak to capture a thought, or New note to write one down.',tag:'Memo',pinned:true,voiceCreated:false,createdAt:now,updatedAt:now},
+      {id:'voice-guide',title:'Start with your voice',content:'“Create note Pick up coffee on the way home”\n“Search coffee”\n“Pin note Coffee”\n\nUse the voice guide for more shortcuts. These are example notes; you can edit or delete them.',tag:'Memo',pinned:false,voiceCreated:false,createdAt:now-1000,updatedAt:now-1000}
+    ];
+  }
+  function load() {
+    try { notes=C.load(localStorage) ?? seed(); }
+    catch(e) { notes=[]; storageReadable=false; notify('Stored notes could not be read. The original data has been left untouched.'); $('storageStatus').textContent='Notebook could not be read. Original browser data has not been overwritten.'; }
+    try { deleted=JSON.parse(localStorage.getItem('voxnotes_last_deleted') || 'null'); if (deleted) deleted=C.normalizeNotes([deleted])[0]; } catch(e) { deleted=null; }
+  }
+  function setFilter(value) { filter=value; render(); closeDrawer(); }
+  function setSearch(value) { query=value; $('searchInput').value=value; render(); }
+  function clearSearch() { query=''; filter='all'; $('searchInput').value=''; render(); }
+  function render() {
+    document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===filter)));
+    const title=labels[filter] || filter;
+    $('pageTitle').textContent=query ? 'Search results' : title;
+    $('breadcrumbLabel').textContent=title;
+    $('pageSubtitle').textContent=query ? `Notes matching “${query}”` : filter==='all' ? 'A little room for everything on your mind.' : filter==='pinned' ? 'The thoughts you want to keep close.' : filter==='voice' ? 'Ideas that started with your voice.' : `A place for your ${title.toLowerCase()} notes.`;
+    const pinned=notes.filter(n=>n.pinned).length, voice=notes.filter(n=>n.voiceCreated).length;
+    for (const [id,value] of Object.entries({statTotal:notes.length,navTotal:notes.length,statPinned:pinned,navPinned:pinned,statVoice:voice,navVoice:voice,statWords:notes.reduce((sum,n)=>sum+C.words(n.content),0)})) $(id).textContent=value.toLocaleString();
+    $('clearSearch').hidden=!query;
+    const filtered=notes.filter(n=>(filter==='all' || (filter==='pinned' ? n.pinned : filter==='voice' ? n.voiceCreated : n.tag===filter)) && (!query || `${n.title} ${n.content} ${n.tag}`.toLocaleLowerCase().includes(query.toLocaleLowerCase())))
+      .sort((a,b)=>sort==='title' ? a.title.localeCompare(b.title) : sort==='created' ? b.createdAt-a.createdAt : b.updatedAt-a.updatedAt);
+    const split=filter==='all' && !query;
+    const pinnedNotes=split ? filtered.filter(n=>n.pinned) : [];
+    const rest=split ? filtered.filter(n=>!n.pinned) : filtered;
+    $('pinnedSection').hidden=!pinnedNotes.length;
+    $('regularSection').hidden=!rest.length;
+    $('pinnedGrid').innerHTML=pinnedNotes.map(card).join('');
+    $('notesGrid').innerHTML=rest.map(card).join('');
+    $('regularHeading').innerHTML=C.escape(query ? `${filtered.length} ${filtered.length===1?'note':'notes'} found` : sort==='title' ? 'In alphabetical order' : sort==='created' ? 'Recently created' : 'Recently edited')+'<span class="line" aria-hidden="true"></span>';
+    $('emptyState').hidden=!!filtered.length;
+    $('emptyTitle').textContent=query ? 'No notes match that thought' : filter==='all' ? 'Make room for a thought' : 'Nothing here just yet';
+    $('emptyText').textContent=query ? 'Try a different word, or clear your search.' : filter==='all' ? 'Start with your voice, or write your first note.' : 'Create a note or choose another collection.';
+    $('emptyAction').textContent=query ? 'Clear search' : 'Create a note';
+  }
+  function card(n) {
+    const date=new Date(n.updatedAt), today=new Date();
+    const time=date.toDateString()===today.toDateString() ? 'Today' : date.toLocaleDateString('en',{month:'short',day:'numeric'});
+    return `<article class="note-card" data-id="${C.escape(n.id)}"><button class="note-open" data-note-action="open" aria-label="Edit ${C.escape(n.title)}"><span class="note-kicker">${C.escape(labels[n.tag] || n.tag)}${n.voiceCreated ? icon('wave')+'<span class="sr-only">Voice note</span>' : ''}</span><h3 class="note-title">${C.escape(n.title)}</h3><p class="note-preview">${C.escape(n.content || 'No content yet')}</p></button><footer class="note-footer"><time datetime="${date.toISOString()}" title="${C.escape(date.toLocaleString())}">${time}</time><div class="card-actions"><button class="icon-button ${n.pinned?'pin-on':''}" data-note-action="pin" aria-label="${n.pinned?'Unpin':'Pin'} ${C.escape(n.title)}" title="${n.pinned?'Unpin':'Pin'}" aria-pressed="${n.pinned}">${icon('pin')}</button><button class="icon-button" data-note-action="read" aria-label="Read ${C.escape(n.title)} aloud" title="Read aloud">${icon('speaker')}</button></div></footer></article>`;
+  }
+  function openEditor(note=null) {
+    stopVoice(true); stopReading(); lastFocus=document.activeElement;
+    draft=note ? {...note} : {...C.makeNote('',false), title:'',tag:C.TAGS.includes(filter) ? filter : 'Memo'};
+    $('noteTitle').value=draft.title; $('noteContent').value=draft.content; $('noteTag').value=draft.tag;
+    $('editorHeading').textContent=note ? 'Edit note' : 'New note';
+    $('deleteNoteBtn').hidden=!note; initialDraft=signature();
+    updateDraftUI(); $('editor').showModal(); document.body.style.overflow='hidden';
+    $('noteTitle').focus();
+  }
+  function signature() { return JSON.stringify({title:$('noteTitle').value,content:$('noteContent').value,tag:$('noteTag').value,pinned:draft?.pinned,voiceCreated:draft?.voiceCreated}); }
+  function dirty() { return !!draft && signature()!==initialDraft; }
+  function updateDraftUI() {
+    $('editorWords').textContent=`${C.words($('noteContent').value)} words`;
+    $('editorPin').setAttribute('aria-pressed',String(!!draft?.pinned));
+    $('editorPin').setAttribute('aria-label',draft?.pinned?'Unpin note':'Pin note');
+    $('saveState').textContent=dirty() ? 'Unsaved changes' : notes.some(n=>n.id===draft?.id) ? 'Saved on this device' : 'Not saved yet';
+  }
+  function finishEditor() { stopVoice(true); stopReading(); $('editor').close(); document.body.style.overflow=''; draft=null; if (lastFocus?.isConnected) lastFocus.focus(); else $('newNoteBtn').focus(); }
+  async function closeEditor() {
+    if (pendingConfirm) return;
+    if (dirty() && !(await confirmAction('Keep this thought?','You have unsaved changes. Save your note before closing, or discard this edit.','Discard changes','Keep editing'))) return;
+    finishEditor();
+  }
+  function saveEditor() {
+    if (!draft) return;
+    stopVoice(true);
+    const title=$('noteTitle').value.trim(), content=$('noteContent').value.trim();
+    if (!title && !content) { notify('Add a title or a thought before saving.'); $('noteContent').focus(); return; }
+    const n={...draft,title:title || content.split(/\s+/).slice(0,6).join(' '),content,tag:$('noteTag').value,updatedAt:Date.now()};
+    const next=notes.some(v=>v.id===n.id) ? notes.map(v=>v.id===n.id ? n : v) : [n,...notes];
+    if (commit(next)) { finishEditor(); notify('Note saved on this device'); }
+    else $('saveState').textContent='Not saved — storage error';
+  }
+  function confirmAction(title,message,accept='Delete note',cancel='Keep note') {
+    if (pendingConfirm) return Promise.resolve(false);
+    stopVoice(true);
+    $('confirmTitle').textContent=title; $('confirmMessage').textContent=message; $('confirmAccept').textContent=accept; $('confirmCancel').textContent=cancel;
+    $('confirmDialog').showModal(); $('confirmCancel').focus();
+    return new Promise(resolve=>pendingConfirm=resolve);
+  }
+  function resolveConfirm(ok) { $('confirmDialog').close(); const resolve=pendingConfirm; pendingConfirm=null; resolve?.(ok); }
+  async function removeNote(note) {
+    if (!note || !(await confirmAction('Delete this note?',`“${note.title}” will be removed from your notebook. You can undo this after deleting.`))) return;
+    // Keep the recovery copy before attempting deletion.
+    try { localStorage.setItem('voxnotes_last_deleted',JSON.stringify(note)); }
+    catch(e) { notify('Could not create an undo copy. The note has not been deleted.'); return; }
+    if (commit(notes.filter(n=>n.id!==note.id))) { deleted=note; if ($('editor').open) finishEditor(); notify('Note deleted',true); }
+  }
+  function undoDelete() {
+    if (!deleted) return;
+    if (notes.some(n=>n.id===deleted.id)) { $('undoBtn').hidden=true; return; }
+    if (commit([deleted,...notes])) { deleted=null; try {localStorage.removeItem('voxnotes_last_deleted');}catch(e){} notify('Note restored'); }
+  }
+  function openHelp(example='') {
+    stopVoice(true); if (!$('helpDialog').open) $('helpDialog').showModal();
+    if (example) { $('commandInput').value=example; $('commandInput').focus(); }
+  }
+  function selectNote(q) {
+    const n=C.find(notes,q);
+    if (!n) notify(`No unique match for “${q}”. Try the full note title.`);
+    return n;
+  }
+  function updateNote(note,changes,message) { if (commit(notes.map(n=>n.id===note.id ? {...n,...changes,updatedAt:Date.now()} : n))) notify(message); }
+  async function command(text,fromVoice=true) {
+    const cmd=C.parse(text); if (cmd.action==='empty') return;
+    if (cmd.action==='help') return openHelp();
+    if (cmd.action==='stop') { stopVoice(true); stopReading(); return; }
+    if (cmd.action==='export') return exportNotes();
+    if (cmd.action==='clear') return clearSearch();
+    if (cmd.action==='incomplete') return notify('Include a note title or a thought. Open the voice guide for examples.');
+    if (cmd.action==='search') { filter='all'; return setSearch(cmd.value); }
+    if (cmd.action==='create') {
+      const note=C.makeNote(cmd.value,fromVoice);
+      if (commit([note,...notes])) { clearSearch(); notify(`Saved “${note.title}”`); }
+      return;
+    }
+    if (cmd.action==='append') {
+      const match=C.appendMatch(notes,cmd.value);
+      if (!match) return notify('Could not identify that note. Use its full title followed by the text to add.');
+      return updateNote(match.note,{content:match.note.content+'\n'+match.text},`Added to “${match.note.title}”`);
+    }
+    const note=selectNote(cmd.value); if (!note) return;
+    switch(cmd.action) {
+      case 'read': return readText(`${note.title}. ${note.content}`);
+      case 'open': return openEditor(note);
+      case 'pin': case 'unpin': return updateNote(note,{pinned:cmd.action==='pin'},cmd.action==='pin'?'Note pinned':'Note unpinned');
+      case 'tag': return updateNote(note,{tag:cmd.tag},`Moved to ${labels[cmd.tag] || cmd.tag}`);
+      case 'delete': return removeNote(note);
+    }
+  }
+  function exportNotes() {
+    if (!notes.length) return notify('Your notebook is empty');
+    const md='# VoxNotes\n\n'+notes.map(n=>`## ${n.title}\n\n${n.tag}${n.pinned?' · Pinned':''} · ${new Date(n.updatedAt).toLocaleString()}\n\n${n.content}\n\n---`).join('\n\n');
+    const url=URL.createObjectURL(new Blob([md],{type:'text/markdown;charset=utf-8'}));
+    const a=document.createElement('a'); a.href=url; a.download=`voxnotes-${new Date().toISOString().slice(0,10)}.md`; document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),10000);
+    notify('Notebook export requested. Check your downloads.');
+  }
+  function voiceUI() {
+    const active=voicePhase==='listening', busy=voicePhase==='starting';
+    $('capture').dataset.state=active?'listening':'idle';
+    $('captureTitle').textContent=active ? voiceMode==='dictation'?'Your words, on the page':'Listening to your thought' : busy?'Opening your microphone…' : speaking?'A moment to listen':'Think it. Say it. Keep it.';
+    if (!active && !busy && !speaking) $('captureHint').textContent=Speech ? 'Speak a thought or a command. We’ll take note.' : 'Voice isn’t supported here. You can still write or type commands.';
+    $('mainMicBtn').innerHTML=icon(active?'stop':'mic')+`<span>${active?'Stop listening':busy?'Connecting…':'Start speaking'}</span>`;
+    $('mainMicBtn').disabled=busy;
+    $('mobileMicBtn').innerHTML=icon(speaking?'stop':active?'stop':'mic')+`<span>${speaking?'Stop audio':active?'Stop':busy?'Opening…':'Speak'}</span>`;
+    $('mobileMicBtn').disabled=busy;
+    $('dockLabel').textContent=active?'Listening…':speaking?'Reading your note':'A thought worth keeping?';
+    $('dockHint').textContent=active?'Tap Stop when you’re finished':speaking?'Tap to stop playback':'Your voice is a good place to start';
+    $('dictateBtn').innerHTML=icon(active && voiceMode==='dictation'?'stop':'mic')+`<span>${active && voiceMode==='dictation'?'Stop':'Dictate'}</span>`;
+    $('dictateBtn').disabled=busy;
+    $('editorVoiceTitle').textContent=active && voiceMode==='dictation'?'Listening to your words':'Give your keyboard a break';
+    $('stopTtsBtn').hidden=!speaking;
+  }
+  function stopVoice(discard=false) {
+    if (!recognition) return;
+    const r=recognition;
+    if (discard) { voiceGeneration++; recognition=null; voicePhase='idle'; voiceMode=null; r.abort(); voiceUI(); }
+    else { r.stop(); }
+  }
+  function toggleVoice(mode='command') {
+    if (speaking) { stopReading(); return; }
+    if (voicePhase!=='idle') { stopVoice(); return; }
+    if (!Speech) { openHelp(); notify('Speech recognition is unavailable in this browser. Try Chrome or Edge.'); return; }
+    if (!window.isSecureContext) { notify('Microphone access needs HTTPS or localhost.'); return; }
+    const r=new Speech(), generation=++voiceGeneration;
+    recognition=r; voiceMode=mode; voicePhase='starting'; voiceUI();
+    r.lang='en-US'; r.continuous=true; r.interimResults=true;
+    r.onstart=()=>{ if (generation!==voiceGeneration) return; voicePhase='listening'; voiceUI(); $('captureHint').textContent='Listening… Your browser may use an online speech service.'; };
+    r.onresult=event=>{
+      if (generation!==voiceGeneration) return;
+      for (let i=event.resultIndex;i<event.results.length;i++) {
+        const result=event.results[i], text=result[0].transcript.trim();
+        if (!result.isFinal) { $('captureHint').textContent=`Hearing: ${text}`; if (mode==='dictation') $('editorVoiceHint').textContent=`Hearing: ${text}`; }
+        else if (mode==='dictation' && draft && $('editor').open) insertDictation(text);
+        else if (mode==='command') command(text,true);
+      }
+    };
+    r.onerror=event=>{
+      if (generation!==voiceGeneration) return;
+      const messages={'not-allowed':'Microphone permission was denied. Allow it in your browser’s site settings.','service-not-allowed':'Your browser’s speech service is unavailable. Try Chrome or Edge.','audio-capture':'No microphone was found. Check your device settings.','network':'Speech service could not connect. Check your connection and try again.','no-speech':'No speech detected. Tap Speak to try again.'};
+      const message=messages[event.error] || 'Voice input stopped. Please try again.';
+      voicePhase='idle'; voiceMode=null; recognition=null; voiceGeneration++; voiceUI();
+      $('captureHint').textContent=message; $('editorVoiceHint').textContent=message; notify(message);
+    };
+    r.onend=()=>{ if (generation!==voiceGeneration) return; recognition=null; voicePhase='idle'; voiceMode=null; voiceUI(); $('editorVoiceHint').textContent='Dictate at your cursor. Say “new line” to format.'; };
+    try { r.start(); } catch(e) { recognition=null; voicePhase='idle'; voiceMode=null; voiceUI(); notify('Could not start the microphone. Please try again.'); }
+  }
+  function insertDictation(text) {
+    const area=$('noteContent'), start=area.selectionStart, end=area.selectionEnd;
+    let value=C.punctuation(text);
+    if (start>0 && !/\s$/.test(area.value.slice(0,start)) && !/^[.,!?\n]/.test(value)) value=' '+value;
+    if (end<area.value.length && !/^\s/.test(area.value.slice(end)) && !/\s$/.test(value)) value+=' ';
+    area.setRangeText(value,start,end,'end'); draft.voiceCreated=true;
+    $('editorVoiceHint').textContent='Added to your note. Keep speaking, or tap Stop.'; updateDraftUI();
+  }
+  function stopReading() { window.speechSynthesis?.cancel(); speaking=false; utterance=null; voiceUI(); }
+  function readText(text) {
+    stopVoice(true); stopReading();
+    if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) return notify('Read aloud is not supported in this browser.');
+    if (!text.trim()) return notify('There’s nothing to read yet.');
+    const u=new SpeechSynthesisUtterance(text); utterance=u; u.rate=1; u.lang='en-US';
+    u.onstart=()=>{ if (utterance!==u) return; speaking=true; voiceUI(); $('captureHint').textContent='Reading aloud. The microphone is off.'; };
+    u.onend=()=>{ if (utterance!==u) return; speaking=false; utterance=null; voiceUI(); };
+    u.onerror=e=>{ if (utterance!==u) return; speaking=false; utterance=null; voiceUI(); if (e.error!=='canceled') notify('Read aloud could not start. Check your browser’s speech settings.'); };
+    window.speechSynthesis.speak(u);
+  }
+  function closeDrawer() { document.body.classList.remove('drawer-open'); $('menuBtn').setAttribute('aria-expanded','false'); $('sidebar').inert=window.innerWidth<768; }
+  function openDrawer() { document.body.classList.add('drawer-open'); $('menuBtn').setAttribute('aria-expanded','true'); $('sidebar').inert=false; $('sidebar').querySelector('button').focus(); }
+  document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>setFilter(b.dataset.filter)));
+  document.querySelectorAll('[data-action]').forEach(b=>b.addEventListener('click',()=>{ closeDrawer(); b.dataset.action==='help'?openHelp():exportNotes(); }));
+  document.querySelectorAll('[data-example]').forEach(b=>b.addEventListener('click',()=>openHelp(b.dataset.example)));
+  $('newNoteBtn').onclick=()=>openEditor();
+  $('searchInput').oninput=e=>{query=e.target.value;render();}; $('clearSearch').onclick=clearSearch;
+  $('sortSelect').onchange=e=>{sort=e.target.value;render();};
+  $('emptyAction').onclick=()=>query?clearSearch():openEditor();
+  $('notesArea').onclick=e=>{
+    const button=e.target.closest('[data-note-action]'); if (!button) return;
+    const note=notes.find(n=>n.id===button.closest('[data-id]').dataset.id); if (!note) return;
+    if (button.dataset.noteAction==='open') openEditor(note);
+    if (button.dataset.noteAction==='read') readText(`${note.title}. ${note.content}`);
+    if (button.dataset.noteAction==='pin') {updateNote(note,{pinned:!note.pinned},note.pinned?'Note unpinned':'Note pinned'); document.querySelector(`[data-id="${CSS.escape(note.id)}"] [data-note-action=pin]`)?.focus();}
+  };
+  $('closeEditor').onclick=closeEditor; $('editor').addEventListener('cancel',e=>{e.preventDefault();closeEditor();});
+  $('saveNoteBtn').onclick=saveEditor;
+  $('noteTitle').oninput=$('noteContent').oninput=$('noteTag').onchange=updateDraftUI;
+  $('editorPin').onclick=()=>{draft.pinned=!draft.pinned;updateDraftUI();};
+  $('editorRead').onclick=()=>speaking?stopReading():readText(`${$('noteTitle').value}. ${$('noteContent').value}`);
+  $('deleteNoteBtn').onclick=()=>removeNote(notes.find(n=>n.id===draft?.id));
+  $('dictateBtn').onclick=()=>toggleVoice('dictation');
+  $('mainMicBtn').onclick=()=>toggleVoice('command'); $('mobileMicBtn').onclick=()=>toggleVoice('command'); $('stopTtsBtn').onclick=stopReading;
+  $('closeHelp').onclick=()=>$('helpDialog').close();
+  $('commandForm').onsubmit=e=>{e.preventDefault();const text=$('commandInput').value; $('helpDialog').close();$('commandInput').value='';command(text,false);};
+  $('confirmAccept').onclick=()=>resolveConfirm(true); $('confirmCancel').onclick=()=>resolveConfirm(false);
+  $('confirmDialog').addEventListener('cancel',e=>{e.preventDefault();resolveConfirm(false);});
+  $('undoBtn').onclick=undoDelete; $('closeToast').onclick=()=>$('toast').hidden=true;
+  $('menuBtn').onclick=()=>document.body.classList.contains('drawer-open')?closeDrawer():openDrawer();
+  $('drawerBackdrop').onclick=()=>{closeDrawer();$('menuBtn').focus();};
+  window.addEventListener('resize',()=>{ if (window.innerWidth>=768) closeDrawer(); else if (!document.body.classList.contains('drawer-open')) $('sidebar').inert=true; });
+  window.addEventListener('keydown',e=>{
+    if ((e.ctrlKey || e.metaKey) && e.key==='s' && $('editor').open) {e.preventDefault();saveEditor();}
+    if (e.key==='Escape' && document.body.classList.contains('drawer-open')) {closeDrawer();$('menuBtn').focus();}
+    if (e.key==='Tab' && document.body.classList.contains('drawer-open')) {
+      const focusable=[...$('sidebar').querySelectorAll('a,button')], first=focusable[0], last=focusable.at(-1);
+      if (e.shiftKey && document.activeElement===first) {e.preventDefault();last.focus();}
+      if (!e.shiftKey && document.activeElement===last) {e.preventDefault();first.focus();}
+    }
+  });
+  window.addEventListener('beforeunload',e=>{if (dirty()){e.preventDefault();e.returnValue='';}});
+  window.addEventListener('storage',e=>{ if (e.key===C.KEY && !draft) {load();render();} else if (e.key===C.KEY) notify('Notebook changed in another tab. Close this editor before reloading.'); });
+  document.addEventListener('visibilitychange',()=>{ if (document.hidden) {stopVoice(true);stopReading();} });
+  $('today').textContent=new Date().toLocaleDateString('en',{weekday:'long',month:'long',day:'numeric'});
+  $('today').dateTime=new Date().toISOString().slice(0,10);
+  load(); render(); closeDrawer(); voiceUI();
+  if (deleted && !notes.some(n=>n.id===deleted.id)) notify('Your last deleted note can be restored',true);
+})();
+</script>
+</body>
+</html>
