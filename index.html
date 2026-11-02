@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>VoxNotes — Voice Notes & Management</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom utility scrollbars and touches */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    
+    @keyframes pulse-ring {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+      70% { box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+    
+    .mic-recording {
+      animation: pulse-ring 1.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    }
+
+    /* Safe bottom area for modern mobile phones */
+    .pb-safe {
+      padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans selection:bg-sky-500 selection:text-slate-950 antialiased overflow-x-hidden">
+
+  <!-- Top App Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-3">
+      
+      <!-- Brand Logo & Title -->
+      <div class="flex items-center gap-2.5 sm:gap-3 cursor-pointer select-none" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700/80 flex items-center justify-center text-sky-400 shadow-sm flex-shrink-0">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" x2="12" y1="19" y2="22"></line>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-base sm:text-lg font-bold tracking-tight text-white">VoxNotes</span>
+            <span class="hidden sm:inline-block font-mono text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">VOICE AI</span>
+          </div>
+          <p class="hidden sm:block text-[11px] text-slate-400 leading-none">Voice-driven notes & management</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <!-- Voice Commands Cheatsheet -->
+        <button id="helpCmdsBtn" class="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium bg-slate-800/80 hover:bg-slate-700/90 text-slate-200 rounded-lg border border-slate-700/80 transition-colors">
+          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span class="hidden md:inline">Voice Commands</span>
+          <span class="md:hidden">Help</span>
+        </button>
+
+        <!-- Export Notes Button -->
+        <button id="exportNotesBtn" class="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium bg-slate-800/80 hover:bg-slate-700/90 text-slate-200 rounded-lg border border-slate-700/80 transition-colors" title="Export all notes to Markdown">
+          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span class="hidden sm:inline">Export</span>
+        </button>
+
+        <!-- New Note Button -->
+        <button id="newNoteBtn" class="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 text-xs sm:text-sm font-semibold bg-sky-500 hover:bg-sky-400 text-slate-950 rounded-lg transition-all shadow-sm active:scale-95">
+          <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>New Note</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Voice Control Section & Waveform HUD -->
+  <section class="bg-slate-900/60 border-b border-slate-800/80 px-3.5 sm:px-6 py-3 sm:py-4">
+    <div class="max-w-7xl mx-auto flex flex-col gap-3">
+      
+      <!-- Top Row: Mic Button + Waveform + TTS Cancel -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Main Mic Toggle -->
+        <button id="mainMicBtn" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-800 border-2 border-slate-700 hover:border-sky-400 text-white flex items-center justify-center flex-shrink-0 transition-all active:scale-95 shadow-md group" title="Click or tap to start/stop listening">
+          <svg id="micIcon" class="w-5 h-5 sm:w-6 sm:h-6 text-slate-300 group-hover:text-sky-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" x2="12" y1="19" y2="22"></line>
+          </svg>
+        </button>
+
+        <!-- Waveform Visualizer & Status Display -->
+        <div class="flex-1 h-12 sm:h-14 bg-slate-950/80 border border-slate-800 rounded-xl relative overflow-hidden flex items-center px-3 sm:px-4">
+          <canvas id="waveCanvas" class="w-full h-full block absolute inset-0"></canvas>
+          
+          <div class="relative z-10 w-full flex items-center justify-between text-xs sm:text-sm font-mono pointer-events-none select-none">
+            <div class="flex items-center gap-2">
+              <span id="micDot" class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+              <span id="voiceStatusLabel" class="text-slate-300 font-sans font-medium text-xs sm:text-sm truncate max-w-[200px] sm:max-w-md">Mic Standby — Tap to speak</span>
+            </div>
+            <span id="voiceStateBadge" class="hidden sm:inline-block text-[11px] px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">READY</span>
+          </div>
+        </div>
+
+        <!-- Stop Speaking TTS Button (Visible when speaking) -->
+        <button id="stopTtsBtn" class="hidden flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-semibold bg-rose-950/40 hover:bg-rose-900/60 border border-rose-700 text-rose-300 rounded-xl transition-all flex-shrink-0 animate-pulse">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="6" y="6" width="12" height="12"></rect>
+          </svg>
+          <span class="hidden sm:inline">Stop Audio</span>
+        </button>
+      </div>
+
+      <!-- Live Voice HUD Feedback Toast Banner -->
+      <div id="hudFeedback" class="bg-slate-900 border border-slate-800 border-l-4 border-l-sky-500 rounded-lg px-3.5 py-2 text-xs sm:text-sm flex items-center justify-between gap-3 transition-colors">
+        <div class="flex items-center gap-2 text-slate-200 overflow-hidden">
+          <svg class="w-4 h-4 text-sky-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span id="hudMsg" class="truncate font-sans">
+            Say <strong>"Create note [idea]"</strong>, <strong>"Read note [title]"</strong>, or <strong>"Search [word]"</strong>.
+          </span>
+        </div>
+        <span id="hudTime" class="font-mono text-[11px] text-slate-500 flex-shrink-0">--:--</span>
+      </div>
+
+      <!-- Quick Command Sample Chips (Horizontal Scroll on Mobile) -->
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
+        <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider whitespace-nowrap flex-shrink-0">Voice Actions:</span>
+        <button class="voice-cmd-chip px-2.5 py-1 text-xs font-medium rounded-full bg-slate-800/80 hover:bg-slate-700 hover:text-white text-slate-300 border border-slate-700 whitespace-nowrap flex items-center gap-1.5 transition-colors" data-cmd="create note Buy fresh fruits and groceries">
+          <span class="text-sky-400">+</span>
+          <span>New Note</span>
+        </button>
+        <button class="voice-cmd-chip px-2.5 py-1 text-xs font-medium rounded-full bg-slate-800/80 hover:bg-slate-700 hover:text-white text-slate-300 border border-slate-700 whitespace-nowrap flex items-center gap-1.5 transition-colors" data-cmd="search standup">
+          <span class="text-amber-400">🔍</span>
+          <span>Search "standup"</span>
+        </button>
+        <button class="voice-cmd-chip px-2.5 py-1 text-xs font-medium rounded-full bg-slate-800/80 hover:bg-slate-700 hover:text-white text-slate-300 border border-slate-700 whitespace-nowrap flex items-center gap-1.5 transition-colors" data-cmd="read note Welcome">
+          <span class="text-emerald-400">🔊</span>
+          <span>Read "Welcome"</span>
+        </button>
+        <button class="voice-cmd-chip px-2.5 py-1 text-xs font-medium rounded-full bg-slate-800/80 hover:bg-slate-700 hover:text-white text-slate-300 border border-slate-700 whitespace-nowrap flex items-center gap-1.5 transition-colors" data-cmd="pin note Weekly Standup Agenda">
+          <span class="text-rose-400">📌</span>
+          <span>Pin "Standup"</span>
+        </button>
+        <button class="voice-cmd-chip px-2.5 py-1 text-xs font-medium rounded-full bg-slate-800/80 hover:bg-slate-700 hover:text-white text-slate-300 border border-slate-700 whitespace-nowrap flex items-center gap-1.5 transition-colors" data-cmd="show all">
+          <span>↺ Clear Filter</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Main Workspace Content -->
+  <main class="max-w-7xl mx-auto px-3.5 sm:px-6 py-4 sm:py-6 flex-1 w-full flex flex-col gap-5 sm:gap-6 pb-24 sm:pb-12">
+
+    <!-- Search Box and Tag Filters Row -->
+    <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+      
+      <!-- Search Input -->
+      <div class="relative flex-1 max-w-xl">
+        <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="w-full bg-slate-900/90 border border-slate-800 focus:border-sky-500 rounded-xl pl-10 pr-9 py-2 text-sm text-slate-100 placeholder-slate-500 outline-none transition-all focus:ring-1 focus:ring-sky-500/50" 
+          placeholder="Search notes or voice commands (e.g. 'search standup')..."
+        >
+        <button id="searchClearBtn" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-1" title="Clear search">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Tag Filter Buttons (Pills) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1 md:pb-0">
+        <button class="filter-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-sky-400 border border-slate-700 whitespace-nowrap transition-colors" data-filter="all">All Notes</button>
+        <button class="filter-tab px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 whitespace-nowrap transition-colors" data-filter="pinned">Pinned</button>
+        <button class="filter-tab px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 whitespace-nowrap transition-colors" data-filter="Work">Work</button>
+        <button class="filter-tab px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 whitespace-nowrap transition-colors" data-filter="Personal">Personal</button>
+        <button class="filter-tab px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 whitespace-nowrap transition-colors" data-filter="Ideas">Ideas</button>
+        <button class="filter-tab px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 whitespace-nowrap transition-colors" data-filter="Todo">Todo</button>
+      </div>
+
+    </div>
+
+    <!-- Telemetry Stats Cards (Responsive 2 cols on mobile, 4 cols on desktop) -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3 sm:p-4 flex items-center justify-between">
+        <div>
+          <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Notes</p>
+          <p id="statTotal" class="text-xl sm:text-2xl font-bold font-mono text-slate-100">0</p>
+        </div>
+        <svg class="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+      </div>
+
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3 sm:p-4 flex items-center justify-between">
+        <div>
+          <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Pinned</p>
+          <p id="statPinned" class="text-xl sm:text-2xl font-bold font-mono text-sky-400">0</p>
+        </div>
+        <svg class="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 17v5"></path>
+          <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path>
+        </svg>
+      </div>
+
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3 sm:p-4 flex items-center justify-between">
+        <div>
+          <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Voice Dictated</p>
+          <p id="statVoice" class="text-xl sm:text-2xl font-bold font-mono text-emerald-400">0</p>
+        </div>
+        <svg class="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+        </svg>
+      </div>
+
+      <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-3 sm:p-4 flex items-center justify-between">
+        <div>
+          <p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Words</p>
+          <p id="statWords" class="text-xl sm:text-2xl font-bold font-mono text-amber-400">0</p>
+        </div>
+        <svg class="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <polyline points="4 7 4 4 20 4 20 7"></polyline>
+          <line x1="9" y1="20" x2="15" y2="20"></line>
+          <line x1="12" y1="4" x2="12" y2="20"></line>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Pinned Notes Section -->
+    <div id="pinnedSection" class="hidden flex flex-col gap-3">
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+        <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 17v5"></path>
+          <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path>
+        </svg>
+        <span>Pinned Notes</span>
+      </div>
+      <div id="pinnedGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+    </div>
+
+    <!-- All Other Notes Section -->
+    <div class="flex flex-col gap-3">
+      <div class="flex items-center gap-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">
+        <svg class="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span id="allNotesSectionTitle">Notes</span>
+      </div>
+      <div id="notesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden py-16 px-4 bg-slate-900/50 border border-dashed border-slate-800 rounded-2xl flex flex-col items-center justify-center text-center gap-3">
+      <div class="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-slate-500">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" x2="12" y1="19" y2="22"></line>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-slate-200">No notes found</p>
+        <p class="text-xs text-slate-400 max-w-sm mt-0.5">Tap the microphone and say <strong>"Create note [your thoughts]"</strong>, or tap New Note below.</p>
+      </div>
+      <button onclick="document.getElementById('newNoteBtn').click()" class="mt-2 px-4 py-2 text-xs font-semibold bg-sky-500 hover:bg-sky-400 text-slate-950 rounded-lg transition-colors">
+        Create First Note
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Floating Mobile Thumb Bar (Sticky bottom on small screens for easy voice control) -->
+  <div class="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/90 backdrop-blur-md border-t border-slate-800 px-4 py-2.5 flex items-center justify-between gap-3 pb-safe">
+    <div class="flex items-center gap-2 overflow-hidden">
+      <span id="mobileStatusDot" class="w-2 h-2 rounded-full bg-slate-600 flex-shrink-0"></span>
+      <span id="mobileStatusText" class="text-xs font-medium text-slate-300 truncate">Tap mic to speak</span>
+    </div>
+    
+    <button id="floatingMicBtn" class="w-11 h-11 rounded-full bg-sky-500 text-slate-950 flex items-center justify-center shadow-lg active:scale-95 flex-shrink-0" title="Voice Dictation">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+        <line x1="12" x2="12" y1="19" y2="22"></line>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Create / Edit Note Modal (Responsive Drawer on mobile, Center Dialog on desktop) -->
+  <div id="noteModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="w-full sm:max-w-xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Modal Header -->
+      <div class="px-4 sm:px-6 py-3.5 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          <span id="modalTitleText" class="font-bold text-sm sm:text-base text-white">Edit Note</span>
+        </div>
+        <button id="closeModalBtn" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-4 sm:p-6 overflow-y-auto flex flex-col gap-4">
+        
+        <!-- Direct Voice Dictation Bar in Editor -->
+        <div class="bg-slate-950/80 border border-dashed border-slate-800 rounded-xl p-2.5 flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2.5 text-xs text-slate-300">
+            <span id="editorDictateDot" class="w-2 h-2 rounded-full bg-slate-600"></span>
+            <span id="editorDictateStatus">Dictate speech into this note</span>
+          </div>
+          <button id="editorDictateBtn" class="px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-colors">
+            <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            </svg>
+            <span>Dictate</span>
+          </button>
+        </div>
+
+        <!-- Note Title Input -->
+        <div class="flex flex-col gap-1.5">
+          <label class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider" for="noteTitleInput">Title</label>
+          <input 
+            type="text" 
+            id="noteTitleInput" 
+            class="bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl px-3.5 py-2 text-sm sm:text-base font-semibold text-white placeholder-slate-600 outline-none transition-colors" 
+            placeholder="Note title..."
+          >
+        </div>
+
+        <!-- Note Content Area -->
+        <div class="flex flex-col gap-1.5">
+          <label class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider" for="noteContentInput">Content</label>
+          <textarea 
+            id="noteContentInput" 
+            class="bg-slate-950 border border-slate-800 focus:border-sky-500 rounded-xl p-3.5 text-xs sm:text-sm text-slate-200 placeholder-slate-600 outline-none min-h-[160px] sm:min-h-[180px] leading-relaxed resize-y font-sans transition-colors" 
+            placeholder="Type or dictate your note... say 'period', 'comma', 'new line' to format."
+          ></textarea>
+        </div>
+
+        <!-- Category Tag Selection -->
+        <div class="flex flex-col gap-1.5">
+          <label class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Category</label>
+          <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            <button class="tag-choice-btn px-2.5 py-1 text-xs font-semibold rounded-lg bg-sky-500 text-slate-950" data-tag="Work">Work</button>
+            <button class="tag-choice-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-tag="Personal">Personal</button>
+            <button class="tag-choice-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-tag="Ideas">Ideas</button>
+            <button class="tag-choice-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-tag="Todo">Todo</button>
+            <button class="tag-choice-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700" data-tag="Memo">Memo</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-4 sm:px-6 py-3.5 bg-slate-950/60 border-t border-slate-800 flex items-center justify-between gap-2 pb-safe">
+        <div class="flex items-center gap-1.5">
+          <button id="modalPinBtn" class="px-2.5 py-1.5 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 flex items-center gap-1.5 transition-colors">
+            <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 17v5"></path>
+              <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path>
+            </svg>
+            <span id="modalPinText">Pin</span>
+          </button>
+
+          <button id="modalSpeakBtn" class="px-2.5 py-1.5 text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg border border-slate-700 flex items-center gap-1.5 transition-colors">
+            <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <span>Read</span>
+          </button>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="deleteNoteBtn" class="px-2.5 py-1.5 text-xs font-medium text-rose-400 hover:bg-rose-950/40 rounded-lg transition-colors">
+            Delete
+          </button>
+          <button id="saveNoteBtn" class="px-4 py-1.5 text-xs sm:text-sm font-semibold bg-sky-500 hover:bg-sky-400 text-slate-950 rounded-lg transition-colors shadow-sm">
+            Save Note
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Voice Commands Cheatsheet Modal -->
+  <div id="cmdsModal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="w-full sm:max-w-xl max-h-[85vh] bg-slate-900 border border-slate-800 rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+      
+      <div class="px-4 sm:px-6 py-3.5 border-b border-slate-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          </svg>
+          <span class="font-bold text-sm sm:text-base text-white">Spoken Commands Cheatsheet</span>
+        </div>
+        <button id="closeCmdsBtn" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-4 sm:p-6 overflow-y-auto flex flex-col gap-3 text-xs sm:text-sm">
+        <p class="text-slate-400">Tap the mic and speak naturally. The voice engine recognizes phrases hands-free:</p>
+        
+        <div class="space-y-2 font-sans">
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80">
+            <p class="font-semibold text-slate-200">Create / New Note</p>
+            <p class="font-mono text-xs text-sky-400 mt-1">"Create note Meeting at 3pm"</p>
+            <p class="font-mono text-xs text-sky-400">"New note Buy eggs, milk and apples"</p>
+          </div>
+
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80">
+            <p class="font-semibold text-slate-200">Append & Edit</p>
+            <p class="font-mono text-xs text-sky-400 mt-1">"Add to note Welcome also verify sync"</p>
+            <p class="font-mono text-xs text-sky-400">"Open note Standup"</p>
+          </div>
+
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80">
+            <p class="font-semibold text-slate-200">Read Aloud (TTS)</p>
+            <p class="font-mono text-xs text-sky-400 mt-1">"Read note Welcome"</p>
+            <p class="font-mono text-xs text-sky-400">"Stop speaking" / "Pause"</p>
+          </div>
+
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80">
+            <p class="font-semibold text-slate-200">Search & Filter</p>
+            <p class="font-mono text-xs text-sky-400 mt-1">"Search grocery"</p>
+            <p class="font-mono text-xs text-sky-400">"Show all" / "Clear search"</p>
+          </div>
+
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80">
+            <p class="font-semibold text-slate-200">Pin & Delete</p>
+            <p class="font-mono text-xs text-sky-400 mt-1">"Pin note Standup"</p>
+            <p class="font-mono text-xs text-sky-400">"Delete note Grocery"</p>
+          </div>
+
+          <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80">
+            <p class="font-semibold text-slate-200">Dictation Punctuation</p>
+            <p class="font-mono text-xs text-slate-400 mt-1">Say "period", "comma", "question mark", "new line"</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-4 sm:px-6 py-3 bg-slate-950/60 border-t border-slate-800 flex justify-end pb-safe">
+        <button onclick="document.getElementById('cmdsModal').classList.add('hidden')" class="px-4 py-1.5 text-xs font-semibold bg-sky-500 text-slate-950 rounded-lg">
+          Got it
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Application Logic -->
+  <script>
+    (function() {
+      'use strict';
+
+      const STORAGE_KEY = 'voxnotes_data_v2';
+
+      const DEFAULT_NOTES = [
+        {
+          id: 'note_1',
+          title: 'Welcome to VoxNotes',
+          content: 'Manage your thoughts and tasks entirely with your voice. Tap the microphone icon or say "New note Buy groceries" to see it in action. You can also say "Read note Welcome" to hear it spoken.',
+          tag: 'Work',
+          pinned: true,
+          voiceCreated: false,
+          createdAt: Date.now() - 3600000 * 24,
+          updatedAt: Date.now() - 3600000 * 24
+        },
+        {
+          id: 'note_2',
+          title: 'Weekly Standup Agenda',
+          content: '1. Review sprint roadmap and velocity.\n2. Fix SpeechRecognition audio latency.\n3. Release voice note export feature.',
+          tag: 'Todo',
+          pinned: true,
+          voiceCreated: true,
+          createdAt: Date.now() - 3600000 * 12,
+          updatedAt: Date.now() - 3600000 * 8
+        },
+        {
+          id: 'note_3',
+          title: 'Voice UI Idea',
+          content: 'Add direct voice commands for tag switching and markdown note formatting without needing to touch the screen.',
+          tag: 'Ideas',
+          pinned: false,
+          voiceCreated: true,
+          createdAt: Date.now() - 3600000 * 4,
+          updatedAt: Date.now() - 3600000 * 4
+        }
+      ];
+
+      let state = {
+        notes: [],
+        activeFilter: 'all',
+        searchQuery: '',
+        isListening: false,
+        isSpeaking: false,
+        activeEditingId: null,
+        editorDictating: false,
+        recognition: null
+      };
+
+      function loadNotes() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            state.notes = JSON.parse(raw);
+          } else {
+            state.notes = [...DEFAULT_NOTES];
+            saveNotes();
+          }
+        } catch (e) {
+          state.notes = [...DEFAULT_NOTES];
+        }
+      }
+
+      function saveNotes() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state.notes));
+        } catch (e) {}
+        updateStats();
+        renderNotes();
+      }
+
+      // --- CANVAS WAVEFORM VISUALIZER ---
+      const waveCanvas = document.getElementById('waveCanvas');
+      const waveCtx = waveCanvas ? waveCanvas.getContext('2d') : null;
+      let wavePhase = 0;
+
+      function drawWaveform() {
+        if (!waveCtx || !waveCanvas) return;
+        const width = waveCanvas.width;
+        const height = waveCanvas.height;
+        const centerY = height / 2;
+
+        waveCtx.clearRect(0, 0, width, height);
+
+        if (state.isListening || state.isSpeaking || state.editorDictating) {
+          const color = state.isSpeaking ? '#38bdf8' : '#f43f5e';
+          const numWaves = 3;
+          for (let w = 0; w < numWaves; w++) {
+            waveCtx.beginPath();
+            waveCtx.strokeStyle = w === 0 ? color : (state.isSpeaking ? 'rgba(56, 189, 248, 0.25)' : 'rgba(244, 63, 94, 0.25)');
+            waveCtx.lineWidth = w === 0 ? 2 : 1;
+
+            for (let x = 0; x < width; x += 4) {
+              const freq = 0.02 + (w * 0.008);
+              const amp = (height * 0.35) * Math.sin((x / width) * Math.PI) * (1 - (w * 0.2));
+              const y = centerY + Math.sin(x * freq + wavePhase + (w * 1.5)) * amp;
+              if (x === 0) waveCtx.moveTo(x, y);
+              else waveCtx.lineTo(x, y);
+            }
+            waveCtx.stroke();
+          }
+          wavePhase += 0.08;
+        } else {
+          waveCtx.lineWidth = 1.2;
+          waveCtx.strokeStyle = '#1e293b';
+          waveCtx.beginPath();
+          for (let x = 0; x < width; x += 6) {
+            const y = centerY + Math.sin(x * 0.015 + wavePhase) * 1.5;
+            if (x === 0) waveCtx.moveTo(x, y);
+            else waveCtx.lineTo(x, y);
+          }
+          waveCtx.stroke();
+          wavePhase += 0.02;
+        }
+
+        requestAnimationFrame(drawWaveform);
+      }
+
+      function initWaveform() {
+        if (!waveCanvas) return;
+        function resize() {
+          const rect = waveCanvas.parentElement.getBoundingClientRect();
+          waveCanvas.width = rect.width;
+          waveCanvas.height = rect.height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+        drawWaveform();
+      }
+
+      // --- TEXT-TO-SPEECH (TTS) ---
+      function speakText(text) {
+        if (!window.speechSynthesis) {
+          showHud('Text-to-Speech not supported in this browser.', false);
+          return;
+        }
+        window.speechSynthesis.cancel();
+        if (!text || !text.trim()) return;
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.05;
+        utterance.pitch = 1.0;
+
+        utterance.onstart = () => {
+          state.isSpeaking = true;
+          updateVoiceUI();
+          document.getElementById('stopTtsBtn')?.classList.remove('hidden');
+        };
+
+        utterance.onend = utterance.onerror = () => {
+          state.isSpeaking = false;
+          updateVoiceUI();
+          document.getElementById('stopTtsBtn')?.classList.add('hidden');
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }
+
+      function stopSpeaking() {
+        if (window.speechSynthesis) {
+          window.speechSynthesis.cancel();
+          state.isSpeaking = false;
+          updateVoiceUI();
+          document.getElementById('stopTtsBtn')?.classList.add('hidden');
+          showHud('Playback stopped.', false);
+        }
+      }
+
+      // --- SPEECH RECOGNITION (STT) ENGINE ---
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+
+      function initSpeech() {
+        if (!SpeechRecognition) {
+          showHud('Native speech recognition unavailable. You can type or use command chips.', false);
+          return;
+        }
+
+        try {
+          const r = new SpeechRecognition();
+          r.continuous = true;
+          r.interimResults = true;
+          r.lang = 'en-US';
+
+          r.onstart = () => {
+            state.isListening = true;
+            updateVoiceUI();
+            showHud('Listening... Speak a command or note.', true);
+          };
+
+          r.onresult = (event) => {
+            let interimTranscript = '';
+            let finalTranscript = '';
+
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+              const res = event.results[i];
+              if (res.isFinal) finalTranscript += res[0].transcript;
+              else interimTranscript += res[0].transcript;
+            }
+
+            if (interimTranscript) showInterim(interimTranscript);
+            if (finalTranscript) handleSpokenInput(finalTranscript.trim());
+          };
+
+          r.onerror = (e) => {
+            if (e.error === 'not-allowed') {
+              showHud('Microphone permission blocked. Enable it in site permissions.', false);
+            }
+            state.isListening = false;
+            updateVoiceUI();
+          };
+
+          r.onend = () => {
+            state.isListening = false;
+            updateVoiceUI();
+          };
+
+          state.recognition = r;
+        } catch (e) {
+          console.error('Speech init error:', e);
+        }
+      }
+
+      function toggleVoiceRecognition() {
+        if (state.isSpeaking) stopSpeaking();
+
+        if (!state.recognition) {
+          const sample = prompt('Enter a voice command to execute (e.g. "Create note Buy groceries", "Search standup", "Read note Welcome"):', 'Create note Weekend plans');
+          if (sample) handleSpokenInput(sample);
+          return;
+        }
+
+        if (state.isListening) {
+          state.recognition.stop();
+          state.isListening = false;
+          showHud('Microphone stopped.', false);
+          updateVoiceUI();
+        } else {
+          try {
+            state.recognition.start();
+          } catch (e) {
+            state.recognition.stop();
+          }
+        }
+      }
+
+      // --- COMMAND PARSER ---
+      function parseAppendCommand(phrase) {
+        const match = phrase.toLowerCase().match(/^(?:add\s+to(?:\s+note)?|append(?:\s+to)?(?:\s+note)?)\s+(.+)$/i);
+        if (!match) return null;
+        const afterPrefix = phrase.substring(phrase.toLowerCase().indexOf(match[1]));
+
+        const sortedNotes = [...state.notes].sort((a, b) => b.title.length - a.title.length);
+        for (const n of sortedNotes) {
+          const tLower = n.title.toLowerCase();
+          const pLower = afterPrefix.toLowerCase();
+          if (pLower.startsWith(tLower)) {
+            const rest = afterPrefix.substring(tLower.length).trim();
+            if (rest) return { note: n, text: rest };
+          }
+          const firstWord = n.title.split(/\s+/)[0].toLowerCase();
+          if (pLower.startsWith(firstWord + ' ')) {
+            const rest = afterPrefix.substring(firstWord.length).trim();
+            if (rest) return { note: n, text: rest };
+          }
+        }
+
+        const parts = afterPrefix.split(/\s+/);
+        if (parts.length >= 2) {
+          const candidateNote = findNoteByFuzzyTitle(parts[0]);
+          if (candidateNote) return { note: candidateNote, text: parts.slice(1).join(' ') };
+        }
+        return null;
+      }
+
+      function handleSpokenInput(phrase) {
+        const text = phrase.trim();
+        const lower = text.toLowerCase();
+
+        // If dictating inside editor modal
+        if (state.activeEditingId !== null && state.editorDictating) {
+          appendSpeechToEditor(phrase);
+          showHud(`Dictated: "${phrase}"`, true);
+          return;
+        }
+
+        // Help
+        if (/^(help|commands|show commands)/i.test(lower)) {
+          document.getElementById('cmdsModal').classList.remove('hidden');
+          showHud('Opened voice command reference.', true);
+          return;
+        }
+
+        // Stop
+        if (/^(stop|pause|stop speaking|stop reading)/i.test(lower)) {
+          stopSpeaking();
+          showHud('Audio stopped.', true);
+          return;
+        }
+
+        // Export notes
+        if (/^(export|download|backup)\s+(?:all\s+)?notes/i.test(lower)) {
+          exportNotesMarkdown();
+          return;
+        }
+
+        // Create Note
+        const createMatch = text.match(/^(?:create(?:\s+a)?\s+note|new\s+note|take(?:\s+a)?\s+note|make(?:\s+a)?\s+note|note)\s+(.+)$/i);
+        if (createMatch) {
+          const body = createMatch[1].trim();
+          createNoteFromVoice(body);
+          return;
+        }
+
+        // Read / Speak
+        const readMatch = text.match(/^(?:read(?:\s+note)?|speak(?:\s+note)?|play(?:\s+note)?|listen to)\s+(.+)$/i);
+        if (readMatch) {
+          const target = readMatch[1].trim();
+          readNoteByTitle(target);
+          return;
+        }
+
+        // Search
+        const searchMatch = text.match(/^(?:search(?:\s+for)?|find|look\s+for)\s+(.+)$/i);
+        if (searchMatch) {
+          const query = searchMatch[1].trim();
+          executeSearch(query);
+          return;
+        }
+
+        // Clear Search / Show All
+        if (/^(?:clear\s+search|show\s+all|reset|all\s+notes)/i.test(lower)) {
+          clearSearch();
+          showHud('Search cleared. Showing all notes.', true);
+          return;
+        }
+
+        // Pin / Unpin
+        const pinMatch = text.match(/^(pin|unpin)\s+(?:note\s+)?(.+)$/i);
+        if (pinMatch) {
+          const action = pinMatch[1].toLowerCase();
+          const target = pinMatch[2].trim();
+          togglePinByTitle(target, action === 'pin');
+          return;
+        }
+
+        // Delete
+        const delMatch = text.match(/^(?:delete|remove|trash|erase)\s+(?:note\s+)?(.+)$/i);
+        if (delMatch) {
+          const target = delMatch[1].trim();
+          deleteNoteByTitle(target);
+          return;
+        }
+
+        // Open / Edit
+        const openMatch = text.match(/^(?:open|edit|view)\s+(?:note\s+)?(.+)$/i);
+        if (openMatch) {
+          const target = openMatch[1].trim();
+          openNoteByTitle(target);
+          return;
+        }
+
+        // Append to Note
+        const appendRes = parseAppendCommand(phrase);
+        if (appendRes) {
+          appendToNoteByTitle(appendRes.note.title, appendRes.text);
+          return;
+        }
+
+        // Fallback: Create note with spoken text
+        createNoteFromVoice(text);
+      }
+
+      function createNoteFromVoice(rawText) {
+        if (!rawText || !rawText.trim()) return;
+
+        const words = rawText.trim().split(/\s+/);
+        let title = '';
+        if (words.length <= 4) {
+          title = words.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        } else {
+          title = words.slice(0, 4).join(' ');
+          title = title.charAt(0).toUpperCase() + title.slice(1);
+        }
+
+        let tag = 'Work';
+        const lower = rawText.toLowerCase();
+        if (lower.includes('buy') || lower.includes('todo') || lower.includes('grocery') || lower.includes('task')) {
+          tag = 'Todo';
+        } else if (lower.includes('idea') || lower.includes('app') || lower.includes('design')) {
+          tag = 'Ideas';
+        } else if (lower.includes('home') || lower.includes('family') || lower.includes('travel')) {
+          tag = 'Personal';
+        }
+
+        const note = {
+          id: 'note_' + Date.now(),
+          title: title,
+          content: rawText.trim(),
+          tag: tag,
+          pinned: false,
+          voiceCreated: true,
+          createdAt: Date.now(),
+          updatedAt: Date.now()
+        };
+
+        state.notes.unshift(note);
+        saveNotes();
+        showHud(`✓ Created voice note: "${title}" [${tag}]`, true);
+      }
+
+      function readNoteByTitle(query) {
+        const note = findNoteByFuzzyTitle(query);
+        if (!note) {
+          showHud(`Could not find a note matching "${query}"`, false);
+          return;
+        }
+        showHud(`🔊 Reading: "${note.title}"`, true);
+        speakText(`${note.title}. ${note.content}`);
+      }
+
+      function togglePinByTitle(query, shouldPin) {
+        const note = findNoteByFuzzyTitle(query);
+        if (!note) {
+          showHud(`Could not find a note matching "${query}"`, false);
+          return;
+        }
+        note.pinned = shouldPin;
+        note.updatedAt = Date.now();
+        saveNotes();
+        showHud(`${shouldPin ? '📌 Pinned' : 'Unpinned'} "${note.title}"`, true);
+      }
+
+      function deleteNoteByTitle(query) {
+        const note = findNoteByFuzzyTitle(query);
+        if (!note) {
+          showHud(`Could not find a note matching "${query}"`, false);
+          return;
+        }
+        state.notes = state.notes.filter(n => n.id !== note.id);
+        saveNotes();
+        showHud(`🗑 Deleted "${note.title}"`, true);
+      }
+
+      function openNoteByTitle(query) {
+        const note = findNoteByFuzzyTitle(query);
+        if (!note) {
+          showHud(`Could not find a note matching "${query}"`, false);
+          return;
+        }
+        openModal(note.id);
+        showHud(`Opened "${note.title}"`, true);
+      }
+
+      function appendToNoteByTitle(query, textToAdd) {
+        const note = findNoteByFuzzyTitle(query);
+        if (!note) {
+          showHud(`Could not find note "${query}" to append to`, false);
+          return;
+        }
+        note.content += '\n' + textToAdd;
+        note.updatedAt = Date.now();
+        saveNotes();
+        showHud(`Added to "${note.title}": "${textToAdd}"`, true);
+      }
+
+      function findNoteByFuzzyTitle(searchStr) {
+        if (!searchStr) return null;
+        const q = searchStr.toLowerCase().replace(/['"]/g, '').trim();
+
+        let match = state.notes.find(n => n.title.toLowerCase() === q);
+        if (match) return match;
+
+        match = state.notes.find(n => n.title.toLowerCase().startsWith(q));
+        if (match) return match;
+
+        match = state.notes.find(n => n.title.toLowerCase().includes(q));
+        if (match) return match;
+
+        match = state.notes.find(n => {
+          const words = n.title.toLowerCase().split(/\s+/);
+          return words.some(w => w.includes(q) || q.includes(w));
+        });
+
+        return match || null;
+      }
+
+      function executeSearch(query) {
+        state.searchQuery = query;
+        const input = document.getElementById('searchInput');
+        if (input) input.value = query;
+        document.getElementById('searchClearBtn')?.classList.remove('hidden');
+        renderNotes();
+        showHud(`Filtered by: "${query}"`, true);
+      }
+
+      function clearSearch() {
+        state.searchQuery = '';
+        state.activeFilter = 'all';
+        const input = document.getElementById('searchInput');
+        if (input) input.value = '';
+        document.getElementById('searchClearBtn')?.classList.add('hidden');
+
+        document.querySelectorAll('.filter-tab').forEach(t => {
+          const isAll = t.getAttribute('data-filter') === 'all';
+          t.className = isAll 
+            ? 'filter-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-sky-400 border border-slate-700 whitespace-nowrap transition-colors'
+            : 'filter-tab px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 whitespace-nowrap transition-colors';
+        });
+
+        renderNotes();
+      }
+
+      function appendSpeechToEditor(phrase) {
+        const contentInput = document.getElementById('noteContentInput');
+        if (!contentInput) return;
+
+        let cleaned = phrase
+          .replace(/\s*\bperiod\b/gi, '.')
+          .replace(/\s*\bcomma\b/gi, ',')
+          .replace(/\s*\bquestion mark\b/gi, '?')
+          .replace(/\s*\bexclamation mark\b/gi, '!')
+          .replace(/\s*\bnew line\s*/gi, '\n')
+          .replace(/\s*\bnew paragraph\s*/gi, '\n\n');
+
+        const cur = contentInput.value;
+        contentInput.value = cur ? (cur.endsWith('\n') ? cur + cleaned : cur + ' ' + cleaned) : cleaned;
+      }
+
+      // --- EXPORT NOTES ---
+      function exportNotesMarkdown() {
+        if (!state.notes.length) {
+          showHud('No notes to export.', false);
+          return;
+        }
+
+        let md = `# VoxNotes Export (${new Date().toLocaleDateString()})\n\n`;
+        state.notes.forEach((n, idx) => {
+          md += `## ${idx + 1}. ${n.title} [${n.tag}]${n.pinned ? ' (Pinned)' : ''}\n`;
+          md += `*Updated: ${new Date(n.updatedAt || n.createdAt).toLocaleString()}*\n\n`;
+          md += `${n.content}\n\n---\n\n`;
+        });
+
+        const blob = new Blob([md], { type: 'text/markdown' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `voxnotes_backup_${new Date().toISOString().slice(0, 10)}.md`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showHud('✓ Exported notes as Markdown file.', true);
+      }
+
+      // --- UI UPDATES ---
+      function showHud(msg, isSuccess) {
+        const hud = document.getElementById('hudFeedback');
+        const hudMsg = document.getElementById('hudMsg');
+        const hudTime = document.getElementById('hudTime');
+        if (!hud || !hudMsg) return;
+
+        hudMsg.innerHTML = msg;
+        if (isSuccess) {
+          hud.className = 'bg-slate-900 border border-emerald-900/60 border-l-4 border-l-emerald-500 rounded-lg px-3.5 py-2 text-xs sm:text-sm flex items-center justify-between gap-3 transition-colors';
+        } else {
+          hud.className = 'bg-slate-900 border border-slate-800 border-l-4 border-l-sky-500 rounded-lg px-3.5 py-2 text-xs sm:text-sm flex items-center justify-between gap-3 transition-colors';
+        }
+
+        const now = new Date();
+        if (hudTime) hudTime.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      }
+
+      function showInterim(text) {
+        const hudMsg = document.getElementById('hudMsg');
+        if (hudMsg) {
+          hudMsg.innerHTML = `<span class="italic text-slate-400">Hearing: "${escapeHtml(text)}"...</span>`;
+        }
+      }
+
+      function updateVoiceUI() {
+        const micBtn = document.getElementById('mainMicBtn');
+        const floatingMic = document.getElementById('floatingMicBtn');
+        const micDot = document.getElementById('micDot');
+        const statusLabel = document.getElementById('voiceStatusLabel');
+        const stateBadge = document.getElementById('voiceStateBadge');
+        const mobileDot = document.getElementById('mobileStatusDot');
+        const mobileText = document.getElementById('mobileStatusText');
+
+        const active = state.isListening || state.editorDictating;
+
+        if (micBtn) {
+          if (active) {
+            micBtn.className = 'w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-rose-500 border-2 border-rose-400 text-white flex items-center justify-center flex-shrink-0 transition-all shadow-lg mic-recording';
+          } else {
+            micBtn.className = 'w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-slate-800 border-2 border-slate-700 hover:border-sky-400 text-white flex items-center justify-center flex-shrink-0 transition-all active:scale-95 shadow-md group';
+          }
+        }
+
+        if (floatingMic) {
+          floatingMic.className = active
+            ? 'w-11 h-11 rounded-full bg-rose-500 text-white flex items-center justify-center shadow-lg mic-recording flex-shrink-0'
+            : 'w-11 h-11 rounded-full bg-sky-500 text-slate-950 flex items-center justify-center shadow-lg active:scale-95 flex-shrink-0';
+        }
+
+        if (micDot) {
+          micDot.className = active ? 'w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse' : (state.isSpeaking ? 'w-2.5 h-2.5 rounded-full bg-sky-400' : 'w-2.5 h-2.5 rounded-full bg-slate-600');
+        }
+
+        if (mobileDot) {
+          mobileDot.className = active ? 'w-2 h-2 rounded-full bg-rose-500 animate-pulse' : 'w-2 h-2 rounded-full bg-slate-600';
+        }
+
+        if (statusLabel) {
+          if (state.isListening) statusLabel.textContent = 'Listening for voice commands...';
+          else if (state.isSpeaking) statusLabel.textContent = 'Speaking note aloud (TTS active)...';
+          else statusLabel.textContent = 'Mic Standby — Tap to speak';
+        }
+
+        if (mobileText) {
+          if (state.isListening) mobileText.textContent = 'Listening...';
+          else if (state.isSpeaking) mobileText.textContent = 'Speaking...';
+          else mobileText.textContent = 'Tap mic to speak';
+        }
+
+        if (stateBadge) {
+          stateBadge.textContent = active ? 'ONLINE' : (state.isSpeaking ? 'SPEAKING' : 'READY');
+        }
+      }
+
+      function updateStats() {
+        const total = state.notes.length;
+        const pinned = state.notes.filter(n => n.pinned).length;
+        const voice = state.notes.filter(n => n.voiceCreated).length;
+        let words = 0;
+        state.notes.forEach(n => {
+          words += (n.content.trim().split(/\s+/).filter(Boolean).length);
+        });
+
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statPinned').textContent = pinned;
+        document.getElementById('statVoice').textContent = voice;
+        document.getElementById('statWords').textContent = words;
+      }
+
+      // --- RENDERING NOTES ---
+      function escapeHtml(str) {
+        if (!str) return '';
+        return str
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function formatDate(ts) {
+        const d = new Date(ts);
+        const now = new Date();
+        const diffHrs = Math.floor((now - d) / 3600000);
+        if (diffHrs < 1) return 'Just now';
+        if (diffHrs < 24) return `${diffHrs}h ago`;
+        return d.toLocaleDateString([], { month: 'short', day: 'numeric' });
+      }
+
+      function getTagColorClass(tag) {
+        switch (tag) {
+          case 'Work': return 'bg-sky-950/60 text-sky-400 border-sky-800/80';
+          case 'Personal': return 'bg-purple-950/60 text-purple-400 border-purple-800/80';
+          case 'Ideas': return 'bg-amber-950/60 text-amber-400 border-amber-800/80';
+          case 'Todo': return 'bg-emerald-950/60 text-emerald-400 border-emerald-800/80';
+          default: return 'bg-pink-950/60 text-pink-400 border-pink-800/80';
+        }
+      }
+
+      function renderNotes() {
+        const pinnedGrid = document.getElementById('pinnedGrid');
+        const notesGrid = document.getElementById('notesGrid');
+        const pinnedSection = document.getElementById('pinnedSection');
+        const emptyState = document.getElementById('emptyState');
+        const allSectionTitle = document.getElementById('allNotesSectionTitle');
+
+        let filtered = state.notes;
+
+        if (state.activeFilter === 'pinned') {
+          filtered = filtered.filter(n => n.pinned);
+        } else if (state.activeFilter !== 'all') {
+          filtered = filtered.filter(n => n.tag.toLowerCase() === state.activeFilter.toLowerCase());
+        }
+
+        if (state.searchQuery.trim()) {
+          const q = state.searchQuery.toLowerCase();
+          filtered = filtered.filter(n =>
+            n.title.toLowerCase().includes(q) ||
+            n.content.toLowerCase().includes(q) ||
+            n.tag.toLowerCase().includes(q)
+          );
+        }
+
+        if (filtered.length === 0) {
+          pinnedSection.classList.add('hidden');
+          notesGrid.innerHTML = '';
+          emptyState.classList.remove('hidden');
+          return;
+        }
+
+        emptyState.classList.add('hidden');
+
+        const showPinnedSeparate = state.activeFilter === 'all' && !state.searchQuery.trim();
+        const pinnedNotes = showPinnedSeparate ? filtered.filter(n => n.pinned) : [];
+        const regularNotes = showPinnedSeparate ? filtered.filter(n => !n.pinned) : filtered;
+
+        if (pinnedNotes.length > 0) {
+          pinnedSection.classList.remove('hidden');
+          pinnedGrid.innerHTML = pinnedNotes.map(n => renderNoteCard(n)).join('');
+        } else {
+          pinnedSection.classList.add('hidden');
+          pinnedGrid.innerHTML = '';
+        }
+
+        if (allSectionTitle) {
+          allSectionTitle.textContent = showPinnedSeparate ? 'All Notes' : `Notes (${filtered.length})`;
+        }
+
+        notesGrid.innerHTML = regularNotes.map(n => renderNoteCard(n)).join('');
+        attachCardListeners();
+      }
+
+      function renderNoteCard(note) {
+        const tagClass = getTagColorClass(note.tag);
+        return `
+          <div class="note-card bg-slate-900/80 hover:bg-slate-900 border ${note.pinned ? 'border-sky-500/50 shadow-sky-950/20 shadow-md' : 'border-slate-800'} rounded-2xl p-4 flex flex-col justify-between gap-3 transition-all hover:-translate-y-0.5" data-id="${note.id}">
+            <div>
+              <!-- Header: Title and Actions -->
+              <div class="flex items-start justify-between gap-2 mb-2">
+                <h3 class="font-bold text-sm sm:text-base text-slate-100 line-clamp-1 leading-snug cursor-pointer" data-action="edit" data-id="${note.id}">
+                  ${escapeHtml(note.title)}
+                </h3>
+                
+                <div class="flex items-center gap-0.5 flex-shrink-0">
+                  <button class="p-1 text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800 transition-colors" title="${note.pinned ? 'Unpin' : 'Pin'}" data-action="pin" data-id="${note.id}">
+                    <svg class="w-4 h-4 ${note.pinned ? 'text-sky-400 fill-sky-400/20' : ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 17v5"></path>
+                      <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"></path>
+                    </svg>
+                  </button>
+
+                  <button class="p-1 text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800 transition-colors" title="Read Aloud" data-action="speak" data-id="${note.id}">
+                    <svg class="w-4 h-4 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                  </button>
+
+                  <button class="p-1 text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800 transition-colors" title="Edit" data-action="edit" data-id="${note.id}">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Content snippet -->
+              <p class="text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-4 cursor-pointer whitespace-pre-wrap" data-action="edit" data-id="${note.id}">
+                ${escapeHtml(note.content)}
+              </p>
+            </div>
+
+            <!-- Card Footer: Tag & Timestamp -->
+            <div class="pt-2.5 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-500 font-mono">
+              <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold border ${tagClass}">
+                ${escapeHtml(note.tag)}
+              </span>
+
+              <div class="flex items-center gap-1.5">
+                ${note.voiceCreated ? `
+                  <span title="Voice dictated" class="text-sky-400">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    </svg>
+                  </span>
+                ` : ''}
+                <span>${formatDate(note.updatedAt || note.createdAt)}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function attachCardListeners() {
+        document.querySelectorAll('.note-card').forEach(card => {
+          const id = card.getAttribute('data-id');
+
+          card.querySelectorAll('[data-action]').forEach(el => {
+            el.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const action = el.getAttribute('data-action');
+              const note = state.notes.find(n => n.id === id);
+              if (!note) return;
+
+              if (action === 'pin') {
+                note.pinned = !note.pinned;
+                note.updatedAt = Date.now();
+                saveNotes();
+                showHud(`${note.pinned ? '📌 Pinned' : 'Unpinned'} "${note.title}"`, true);
+              } else if (action === 'speak') {
+                showHud(`🔊 Reading: "${note.title}"`, true);
+                speakText(`${note.title}. ${note.content}`);
+              } else if (action === 'edit') {
+                openModal(id);
+              }
+            });
+          });
+
+          card.addEventListener('click', () => openModal(id));
+        });
+      }
+
+      // --- NOTE MODAL DIALOG ---
+      function openModal(noteId) {
+        state.activeEditingId = noteId;
+        const modal = document.getElementById('noteModal');
+        const titleInput = document.getElementById('noteTitleInput');
+        const contentInput = document.getElementById('noteContentInput');
+        const modalTitle = document.getElementById('modalTitleText');
+        const modalPinText = document.getElementById('modalPinText');
+
+        if (noteId) {
+          const note = state.notes.find(n => n.id === noteId);
+          if (!note) return;
+          modalTitle.textContent = 'Edit Note';
+          titleInput.value = note.title;
+          contentInput.value = note.content;
+          modalPinText.textContent = note.pinned ? 'Unpin' : 'Pin';
+
+          document.querySelectorAll('.tag-choice-btn').forEach(btn => {
+            const isMatch = btn.getAttribute('data-tag') === note.tag;
+            btn.className = isMatch 
+              ? 'tag-choice-btn px-2.5 py-1 text-xs font-semibold rounded-lg bg-sky-500 text-slate-950'
+              : 'tag-choice-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700';
+          });
+        } else {
+          modalTitle.textContent = 'Create Note';
+          titleInput.value = '';
+          contentInput.value = '';
+          modalPinText.textContent = 'Pin';
+
+          document.querySelectorAll('.tag-choice-btn').forEach((btn, idx) => {
+            btn.className = idx === 0
+              ? 'tag-choice-btn px-2.5 py-1 text-xs font-semibold rounded-lg bg-sky-500 text-slate-950'
+              : 'tag-choice-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700';
+          });
+        }
+
+        modal.classList.remove('hidden');
+        titleInput.focus();
+      }
+
+      function closeModal() {
+        document.getElementById('noteModal').classList.add('hidden');
+        state.activeEditingId = null;
+        if (state.editorDictating) toggleEditorDictation(false);
+      }
+
+      function saveModalNote() {
+        const titleInput = document.getElementById('noteTitleInput');
+        const contentInput = document.getElementById('noteContentInput');
+        const selectedTagBtn = document.querySelector('.tag-choice-btn.bg-sky-500');
+        const tag = selectedTagBtn ? selectedTagBtn.getAttribute('data-tag') : 'Work';
+
+        const title = titleInput.value.trim() || 'Untitled Note';
+        const content = contentInput.value.trim();
+
+        if (state.activeEditingId) {
+          const note = state.notes.find(n => n.id === state.activeEditingId);
+          if (note) {
+            note.title = title;
+            note.content = content;
+            note.tag = tag;
+            note.updatedAt = Date.now();
+          }
+        } else {
+          const newNote = {
+            id: 'note_' + Date.now(),
+            title: title,
+            content: content,
+            tag: tag,
+            pinned: false,
+            voiceCreated: state.editorDictating,
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          };
+          state.notes.unshift(newNote);
+        }
+
+        saveNotes();
+        closeModal();
+        showHud(`✓ Saved note: "${title}"`, true);
+      }
+
+      function deleteModalNote() {
+        if (!state.activeEditingId) {
+          closeModal();
+          return;
+        }
+
+        const note = state.notes.find(n => n.id === state.activeEditingId);
+        if (note && confirm(`Delete note "${note.title}"?`)) {
+          state.notes = state.notes.filter(n => n.id !== state.activeEditingId);
+          saveNotes();
+          closeModal();
+          showHud(`Deleted note "${note.title}"`, true);
+        }
+      }
+
+      function toggleModalPin() {
+        if (!state.activeEditingId) return;
+        const note = state.notes.find(n => n.id === state.activeEditingId);
+        if (note) {
+          note.pinned = !note.pinned;
+          document.getElementById('modalPinText').textContent = note.pinned ? 'Unpin' : 'Pin';
+          saveNotes();
+        }
+      }
+
+      function toggleEditorDictation(forceState) {
+        state.editorDictating = typeof forceState === 'boolean' ? forceState : !state.editorDictating;
+        const btn = document.getElementById('editorDictateBtn');
+        const status = document.getElementById('editorDictateStatus');
+        const dot = document.getElementById('editorDictateDot');
+
+        if (state.editorDictating) {
+          btn.className = 'px-2.5 py-1 text-xs font-semibold rounded-lg bg-rose-500 text-white flex items-center gap-1.5 animate-pulse';
+          status.innerHTML = '<span class="text-rose-400 font-semibold">● Listening... speak directly into note</span>';
+          if (dot) dot.className = 'w-2 h-2 rounded-full bg-rose-500 animate-pulse';
+          if (!state.isListening && state.recognition) {
+            try { state.recognition.start(); } catch(e){}
+          }
+        } else {
+          btn.className = 'px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-colors';
+          status.textContent = 'Dictate speech into this note';
+          if (dot) dot.className = 'w-2 h-2 rounded-full bg-slate-600';
+        }
+        updateVoiceUI();
+      }
+
+      // --- EVENT SETUP ---
+      function setupEvents() {
+        document.getElementById('mainMicBtn')?.addEventListener('click', toggleVoiceRecognition);
+        document.getElementById('floatingMicBtn')?.addEventListener('click', toggleVoiceRecognition);
+        document.getElementById('stopTtsBtn')?.addEventListener('click', stopSpeaking);
+
+        // Voice Command Chips
+        document.querySelectorAll('.voice-cmd-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            const cmd = chip.getAttribute('data-cmd');
+            if (cmd) {
+              showHud(`Executing: "${cmd}"`, true);
+              handleSpokenInput(cmd);
+            }
+          });
+        });
+
+        // Search
+        const searchInput = document.getElementById('searchInput');
+        const searchClearBtn = document.getElementById('searchClearBtn');
+
+        if (searchInput) {
+          searchInput.addEventListener('input', (e) => {
+            state.searchQuery = e.target.value;
+            if (searchClearBtn) {
+              searchClearBtn.classList.toggle('hidden', !state.searchQuery);
+            }
+            renderNotes();
+          });
+
+          searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+              const val = searchInput.value.trim();
+              if (/^(create|new|read|speak|pin|unpin|delete|tag|add\s+to|append)\s/i.test(val)) {
+                state.searchQuery = '';
+                searchInput.value = '';
+                searchClearBtn?.classList.add('hidden');
+                handleSpokenInput(val);
+              }
+            }
+          });
+        }
+
+        if (searchClearBtn) {
+          searchClearBtn.addEventListener('click', clearSearch);
+        }
+
+        // Filter Tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+          tab.addEventListener('click', () => {
+            document.querySelectorAll('.filter-tab').forEach(t => {
+              t.className = 'filter-tab px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900/80 hover:bg-slate-800 text-slate-400 hover:text-slate-200 border border-slate-800 whitespace-nowrap transition-colors';
+            });
+            tab.className = 'filter-tab px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-sky-400 border border-slate-700 whitespace-nowrap transition-colors';
+            state.activeFilter = tab.getAttribute('data-filter');
+            renderNotes();
+          });
+        });
+
+        // Modals
+        document.getElementById('newNoteBtn')?.addEventListener('click', () => openModal(null));
+        document.getElementById('closeModalBtn')?.addEventListener('click', closeModal);
+        document.getElementById('saveNoteBtn')?.addEventListener('click', saveModalNote);
+        document.getElementById('deleteNoteBtn')?.addEventListener('click', deleteModalNote);
+        document.getElementById('modalPinBtn')?.addEventListener('click', toggleModalPin);
+        document.getElementById('modalSpeakBtn')?.addEventListener('click', () => {
+          const title = document.getElementById('noteTitleInput').value;
+          const content = document.getElementById('noteContentInput').value;
+          speakText(`${title}. ${content}`);
+        });
+
+        document.getElementById('editorDictateBtn')?.addEventListener('click', () => toggleEditorDictation());
+
+        // Tag Choice Buttons inside modal
+        document.querySelectorAll('.tag-choice-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.tag-choice-btn').forEach(b => {
+              b.className = 'tag-choice-btn px-2.5 py-1 text-xs font-medium rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700';
+            });
+            btn.className = 'tag-choice-btn px-2.5 py-1 text-xs font-semibold rounded-lg bg-sky-500 text-slate-950';
+          });
+        });
+
+        // Export Button
+        document.getElementById('exportNotesBtn')?.addEventListener('click', exportNotesMarkdown);
+
+        // Cheatsheet Modal
+        document.getElementById('helpCmdsBtn')?.addEventListener('click', () => {
+          document.getElementById('cmdsModal').classList.remove('hidden');
+        });
+        document.getElementById('closeCmdsBtn')?.addEventListener('click', () => {
+          document.getElementById('cmdsModal').classList.add('hidden');
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeModal();
+            document.getElementById('cmdsModal')?.classList.add('hidden');
+          }
+        });
+      }
+
+      function init() {
+        loadNotes();
+        initWaveform();
+        initSpeech();
+        setupEvents();
+        updateStats();
+        renderNotes();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>
